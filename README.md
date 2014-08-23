@@ -1,4 +1,7 @@
 store
+
+Este es un cambio al archivo
+
 =====
 Esta es una prueba de commit
 Realizado por: ialon

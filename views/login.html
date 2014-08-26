@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Iniciar sesión</title>
+    <style type="text/css">
+      .label {text-align: right}
+      .error {color: red}
+    </style>
+
+  </head>
+
+  <body>
+    <h2>Iniciar sesión</h2>
+    <form method="post">
+      <table>
+        <tr>
+          <td class="label">
+            Nombre de usuario
+          </td>
+          <td>
+            <input type="text" name="username" value="{{username}}">
+          </td>
+          <td class="error">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">
+            Contraseña
+          </td>
+          <td>
+            <input type="password" name="password" value="">
+          </td>
+          <td class="error">
+	    {{login_error}}
+            
+          </td>
+        </tr>
+
+      </table>
+
+      <input type="submit">
+    </form>
+  </body>
+
+</html>

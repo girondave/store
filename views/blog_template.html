@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WebApp</title>
+</head>
+<body>
+
+{% if username %}
+Bienvenido {{username}}        <a href="/logout">Cerrar sesión</a> | <a href="/newpost">New Post</a><p>
+{% else %}
+¡Aún no ha iniciado sesión!        <a href="/login">Iniciar sesión</a> | <a href="/signup">Crear usuario</a><p>
+{% endif %}
+
+<h1>WebApp</h1>
+
+{% for post in myposts %}
+<h2><a href="/post/{{post['permalink']}}">{{post['title']}}</a></h2>
+Posted {{post['date']}} <i>By {{post['author']}}</i><br>
+Comments:
+<a href="/post/{{post['permalink']}}">{{post['comments']|length}}</a>
+<hr>
+{% autoescape false %}
+{{post['body']}}
+{% endautoescape %}
+<p>
+<p>
+<em>Filed Under</em>:
+{% for tag in post.tags %}
+    {% if loop.first %}
+        <a href="/tag/{{tag}}">{{tag}}</a>
+    {% else %}
+        , <a href="/tag/{{tag}}">{{tag}}</a>
+    {% endif %}
+{% endfor %}
+{% endfor %}
+<p>
+</body>
+</html>
+
+

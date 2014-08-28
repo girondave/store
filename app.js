@@ -17,6 +17,7 @@ app.listen(port, function() {
 
 
 var express = require('express')
+  , path = require('path')
   , app = express() // Web framework to handle routing requests
   //, cookieParser = require('cookie-parser')
   //, bodyParser = require('body-parser')
@@ -38,6 +39,9 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
 
     // Express middleware to populate 'req.body' so we can access POST variables
     app.use(express.bodyParser());
+
+    //css
+    app.use(express.static(path.join(__dirname, 'public')));
 
     // Application routes
     routes(app, db);

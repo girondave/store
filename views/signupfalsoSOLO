@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Agregar usuario</title>
+<style type="text/css">
+.label {text-align: right}
+.error {color: red}
+</style>
+</head>
+<body>
+¿Ya tienes usuario? <a href="/login">Iniciar sesión</a><p>
+<h2>Crear usuario</h2>
+<form method="post">
+<table>
+<tr>
+<td class="label">
+Email
+</td>
+<td>
+<input type="text" name="email" value="{{email}}">
+</td>
+<td class="error">
+{{email_error}}
+{{username_error}}
+</td>
+</tr>
+<!-- Comentario: login original de usuario, cambiado a email
+<tr>
+<td class="label">
+Nombre de usuario
+</td>
+<td>
+<input type="text" name="username" value="{{username}}">
+</td>
+<td class="error">
+{{username_error}}
+</td>
+</tr>
+-->
+<tr>
+<td class="label">
+Contraseña
+</td>
+<td>
+<input type="password" name="password" value="">
+</td>
+<td class="error">
+{{password_error}}
+</td>
+</tr>
+<tr>
+<td class="label">
+Verificar contraseña
+</td>
+<td>
+<input type="password" name="verify" value="">
+</td>
+<td class="error">
+{{verify_error}}
+</td>
+</tr>
+</table>
+<input type="submit">
+</form>
+</body>
+</html>

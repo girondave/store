@@ -7,11 +7,33 @@
       .label {text-align: right}
       .error {color: red}
     </style>
+<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+		<link rel="stylesheet" href="./css/demo.css">
+		<link rel="stylesheet" href="./css/font-awesome.css">
+		<link rel="stylesheet" href="./css/sky-forms.css">
+        
+        <!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+		<![endif]-->
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/jquery.modal.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->		
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
 
   </head>
 
-  <body>
-    ¿Ya tienes usuario? <a href="/login">Iniciar sesión</a><p>
+  <body class="bg-cyan">
+    ¿Ya tienes usuario? <a href="/login">Iniciar sesi&oacute;n</a><p>
     <h2>Crear usuario</h2>
     <form method="post">
       <table>
@@ -70,8 +92,9 @@
 
       </table>
 
-      <input type="submit">
+      <button type="submit" class="button">Enviar</button>
     </form>
+
   </body>
 
 </html>

@@ -47,6 +47,8 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     // Application routes
     routes(app, db);
 
-    app.listen(3000 || process.env.PORT);
-    console.log('Express server listening on port 3000');
+    app.set('port', process.env.PORT || 5000);
+
+    app.listen(app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });

@@ -1,4 +1,21 @@
-var express = require('express')
+
+var express = require("express");
+var logfmt = require("logfmt");
+var app = express();
+
+app.use(logfmt.requestLogger());
+
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
+
+var port = Number(process.env.PORT || 5000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
+
+
+/*var express = require('express')
   , app = express() // Web framework to handle routing requests
   //, cookieParser = require('cookie-parser')
   //, bodyParser = require('body-parser')
@@ -27,3 +44,4 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     app.listen(3000);
     console.log('Express server listening on port 3000');
 });
+*/

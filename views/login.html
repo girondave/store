@@ -3,51 +3,201 @@
 <html>
   <head>
     <title>Iniciar sesión</title>
-    <style type="text/css">
-      .label {text-align: right}
-      .error {color: red}
-    </style>
+    
+    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+		<link rel="stylesheet" href="css/demo.css">
+		<link rel="stylesheet" href="css/font-awesome.css">
+		<link rel="stylesheet" href="css/sky-forms.css">
+        
+        <!--[if lt IE 9]>
+			<link rel="stylesheet" href="css/sky-forms-ie8.css">
+		<![endif]-->
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.form.min.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/jquery.modal.js"></script>
+		<!--[if lt IE 10]>
+			<script src="js/jquery.placeholder.min.js"></script>
+		<![endif]-->		
+		<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="js/sky-forms-ie8.js"></script>
+		<![endif]-->
 
   </head>
 
   <body>
     <h2>Iniciar sesión</h2>
-	<h3>ardillas</h2>
-<<<<<<< HEAD
-        <h4>MAS ARDILLAS</h4>
-        <h4>Re contra mas Ardillas de todo el mundo</h4>
-=======
->>>>>>> f62028576a3548912ba2b3522eb7cd79cb804aed
-    <form method="post">
-      <table>
-        <tr>
-          <td class="label">
-            Nombre de usuario
-          </td>
-          <td>
-            <input type="text" name="username" value="{{username}}">
-          </td>
-          <td class="error">
-          </td>
-        </tr>
-
-        <tr>
-          <td class="label">
-            Contraseña
-          </td>
-          <td>
-            <input type="password" name="password" value="">
-          </td>
-          <td class="error">
-	    {{login_error}}
-            
-          </td>
-        </tr>
-
-      </table>
-
-      <input type="submit">
-    </form>
-  </body>
-
+    
+    	<body class="bg-cyan">
+		<div class="body body-s">		
+			<form method="post" id="sky-form" class="sky-form">
+				<header>Iniciar Sesión</header>
+				
+				<fieldset>					
+					<section>
+						<div class="row">
+							<label class="label col col-4">E-mail</label>
+							<div class="col col-8">
+								<label class="input">
+									<i class="icon-append fa fa-user"></i>
+									<input type="email" name="email" value="{{username}}">
+								</label>
+							</div>
+						</div>
+					</section>
+					
+					<section>
+						<div class="row">
+							<label class="label col col-4">Contraseña</label>
+							<div class="col col-8">
+								<label class="input">
+									<i class="icon-append fa fa-lock"></i>
+									<input type="password" name="password" value="">
+								</label>
+								<div class="note"><a href="#sky-form2" class="modal-opener">¿Olvidaste la contraseña?</a></div>
+							</div>
+						</div>
+					</section>
+					
+					<section>
+						<div class="row">
+							<div class="col col-4"></div>
+							<div class="col col-8">
+								<label class="checkbox"><input type="checkbox" name="remember" checked><i></i>No cerrar sesión</label>
+							</div>
+						</div>
+					</section>
+				</fieldset>
+				<footer>
+					<button type="submit" class="button">Iniciar Sesión</button>
+					<a href="#" class="button button-secondary">Regístrate</a>
+				</footer>
+			</form>			
+		</div>
+		
+		
+		
+		<form action="demo-login-process.php" id="sky-form2" class="sky-form sky-form-modal">
+			<header>Recuperar contraseña</header>
+			
+			<fieldset>					
+				<section>
+					<label class="label">E-mail</label>
+					<label class="input">
+						<i class="icon-append fa fa-envelope-o"></i>
+						<input type="email" name="email" id="email">
+					</label>
+				</section>
+			</fieldset>
+			
+			<footer>
+				<button type="submit" name="submit" class="button">Enviar</button>
+				<a href="#" class="button button-secondary modal-closer">Cerrar</a>
+			</footer>
+				
+			<div class="message">
+				<i class="icon-ok"></i>
+				<p>Tu petición fue enviada con éxito<br><a href="#" class="modal-closer">Cerrar</a></p>
+			</div>
+		</form>
+		
+		<script type="text/javascript">
+			$(function()
+			{
+				// Validation for login form
+				$("#sky-form").validate(
+				{					
+					// Rules for form validation
+					rules:
+					{
+						email:
+						{
+							required: true,
+							email: true
+						},
+						password:
+						{
+							required: true,
+							minlength: 3,
+							maxlength: 20
+						}
+					},
+										
+					// Messages for form validation
+					messages:
+					{
+						email:
+						{
+							required: 'Por favor introduzca su correo electrónico',
+							email: 'Correo electrónico no válido'
+						},
+						password:
+						{
+							required: 'Por favor introduzca su contraseña'
+						}
+					},					
+					
+					// Do not change code below
+					errorPlacement: function(error, element)
+					{
+						error.insertAfter(element.parent());
+					}
+				});
+				
+				
+				// Validation for recovery form
+				$("#sky-form2").validate(
+				{					
+					// Rules for form validation
+					rules:
+					{
+						email:
+						{
+							required: true,
+							email: true
+						}
+					},
+										
+					// Messages for form validation
+					messages:
+					{
+						email:
+						{
+							required: 'Por favor introduzca su correo electrónico',
+							email: 'Correo electrónico no válido'
+						}
+					},
+										
+					// Ajax form submition					
+					submitHandler: function(form)
+					{
+						$(form).ajaxSubmit(
+						{
+							beforeSend: function()
+							{
+								$('#sky-form button[type="submit"]').attr('disabled', true);
+							},
+							success: function()
+							{
+								$("#sky-form2").addClass('submited');
+							}
+						});
+					},				
+					
+					// Do not change code below
+						errorPlacement: function(error, element)
+					{
+						error.insertAfter(element.parent());
+					}
+				});
+			});			
+		</script>
+	</body>
 </html>
+    
+    
+    

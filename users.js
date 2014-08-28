@@ -13,7 +13,7 @@ function UsersDAO(db) {
 
     var users = db.collection("users");
 
-    this.addUser = function(username, password, email, callback) {
+    this.addUser = function(email, password, callback) {
         "use strict";
 
         // Generate password hash
@@ -21,16 +21,9 @@ function UsersDAO(db) {
         var password_hash = bcrypt.hashSync(password, salt);
 
         // Create user document
-        var user = {'_id': username, 'password': password_hash};
+        var user = {'_id': email, 'password': password_hash};
 
-        // Add email if set
-        if (email != "") {
-            user['email'] = email;
-        }
-
-        // TODO: hw2.3
         users.insert(user, function(err, inserted) {
-            //"use strict";
 
             if (err){
                 return callback(err, null)
@@ -39,8 +32,6 @@ function UsersDAO(db) {
                 callback(null,user);
             }
         });
-        
-        //callback(Error("addUser Not Yet Implemented!"), null);
     }
 
     this.validateLogin = function(username, password, callback) {
@@ -71,14 +62,10 @@ function UsersDAO(db) {
             }
         }
 
-        // TODO: hw2.3
         users.findOne({"_id":username}, function(err, doc){
             validateUserDoc(err,doc);
         });
         
-        //callback(null,user);
-
-        //callback(Error("validateLogin Not Yet Implemented!"), null);
     }
 }
 

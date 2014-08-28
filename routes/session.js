@@ -10,11 +10,11 @@ function SessionHandler (db) {
 
     this.isLoggedInMiddleware = function(req, res, next) {
         var session_id = req.cookies.session;
-        sessions.getUsername(session_id, function(err, username) {
+        sessions.getUsername(session_id, function(err, email) {
             "use strict";
 
-            if (!err && username) {
-                req.username = username;
+            if (!err && email) {
+                req.email = email;
             }
             return next();
         });
@@ -22,26 +22,26 @@ function SessionHandler (db) {
 
     this.displayLoginPage = function(req, res, next) {
         "use strict";
-        return res.render("login", {username:"", password:"", login_error:""})
+        return res.render("login", {email:"", password:"", login_error:""})
     }
 
     this.handleLoginRequest = function(req, res, next) {
         "use strict";
 
-        var username = req.body.username;
+        var email = req.body.email;
         var password = req.body.password;
 
-        console.log("user submitted username: " + username + " pass: " + password);
+        console.log("user submitted email: " + email + " pass: " + password);
 
-        users.validateLogin(username, password, function(err, user) {
+        users.validateLogin(email, password, function(err, user) {
             "use strict";
 
             if (err) {
                 if (err.no_such_user) {
-                    return res.render("login", {username:username, password:"", login_error:"No such user"});
+                    return res.render("login", {email:email, password:"", login_error:"No such user"});
                 }
                 else if (err.invalid_password) {
-                    return res.render("login", {username:username, password:"", login_error:"Invalid password"});
+                    return res.render("login", {email:email, password:"", login_error:"Invalid password"});
                 }
                 else {
                     // Some other kind of error
@@ -75,27 +75,21 @@ function SessionHandler (db) {
 
     this.displaySignupPage =  function(req, res, next) {
         "use strict";
-        res.render("signup", {username:"", password:"",
+        res.render("signup", {email:"", password:"",
                                     password_error:"",
-                                    email:"", username_error:"", email_error:"",
+                                    email_error:"",
                                     verify_error :""});
     }
 
-    function validateSignup(username, password, verify, email, errors) {
+    function validateSignup(email, password, verify, errors) {
         "use strict";
-        var USER_RE = /^[a-zA-Z0-9_-]{3,20}$/;
         var PASS_RE = /^.{3,20}$/;
-        var EMAIL_RE = /^[\S]+@[\S]+\.[\S]+$/;
+        var EMAIL_RE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-        errors['username_error'] = "";
         errors['password_error'] = "";
         errors['verify_error'] = "";
         errors['email_error'] = "";
 
-        if (!USER_RE.test(username)) {
-            errors['username_error'] = "invalid username. try just letters and numbers";
-            return false;
-        }
         if (!PASS_RE.test(password)) {
             errors['password_error'] = "invalid password.";
             return false;
@@ -104,11 +98,11 @@ function SessionHandler (db) {
             errors['verify_error'] = "password must match";
             return false;
         }
-        if (email != "") {
-            if (!EMAIL_RE.test(email)) {
+        console.log(EMAIL_RE.test(email));
+        console.log(email);
+        if (!EMAIL_RE.test(email)) {
                 errors['email_error'] = "invalid email address";
                 return false;
-            }
         }
         return true;
     }
@@ -117,20 +111,21 @@ function SessionHandler (db) {
         "use strict";
 
         var email = req.body.email
-        var username = req.body.username
+        console.log('req.body.email = ' + email);
+        //var email = req.body.email
         var password = req.body.password
         var verify = req.body.verify
 
         // set these up in case we have an error case
-        var errors = {'username': username, 'email': email}
-        if (validateSignup(username, password, verify, email, errors)) {
-            users.addUser(username, password, email, function(err, user) {
+        var errors = {'email': email}
+        if (validateSignup(email, password, verify, errors)) {
+            users.addUser(email, password, function(err, user) {
                 "use strict";
 
                 if (err) {
                     // this was a duplicate
                     if (err.code == '11000') {
-                        errors['username_error'] = "Username already in use. Please choose another";
+                        errors['email_error'] = "email already in use. Please choose another";
                         return res.render("signup", errors);
                     }
                     // this was a different error
@@ -158,12 +153,12 @@ function SessionHandler (db) {
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
 
-        if (!req.username) {
+        if (!req.email) {
             console.log("welcome: can't identify user...redirecting to signup");
             return res.redirect("/signup");
         }
 
-        return res.render("welcome", {'username':req.username})
+        return res.render("welcome", {'email':req.email})
     }
 }
 

@@ -17,6 +17,7 @@ app.listen(port, function() {
 
 
 var express = require('express')
+  //variable path para accesar CSS
   , path = require('path')
   , app = express() // Web framework to handle routing requests
   //, cookieParser = require('cookie-parser')
@@ -40,12 +41,12 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     // Express middleware to populate 'req.body' so we can access POST variables
     app.use(express.bodyParser());
 
-    //css
+    // Express middleware para usar CSS
     app.use(express.static(path.join(__dirname, 'public')));
 
     // Application routes
     routes(app, db);
 
-    app.listen(process.env.PORT || 3000);
+    app.listen(3000 || process.env.PORT);
     console.log('Express server listening on port 3000');
 });

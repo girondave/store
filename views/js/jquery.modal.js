@@ -27,8 +27,4 @@ $(function()
 		
 		return false;
 	});
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> origin/master

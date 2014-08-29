@@ -2,6 +2,7 @@
 
 <html>
   <head>
+    <script src="sorttable.js"></script>
     <title>Administración de Usuarios</title>
     
     <style type="text/css">
@@ -28,49 +29,25 @@
 </ul>
 
 
-<ul>
+<table class="sortable">
+<thead>
+  <tr><th>Person</th><th>Monthly pay</th></tr>
+</thead>
+<tbody>
+
 {% for user in usuarios %}
-<li>
-    {{user['_id']}}
-</li>
 
-<!--
-<h2>
-  <a href="/post/{{post['permalink']}}">{{post['title']}}</a>
-</h2>
-
-Posted {{post['date']}} <i>By {{post['author']}}</i><br>
-
-Comments:
-<a href="/post/{{post['permalink']}}">{{post['comments']|length}}</a>
-
-<hr>
-
-{% autoescape false %}
-
-{{post['body']}}
-
-{% endautoescape %}
-
-<p>
-
-<p>
-
-<em>Filed Under</em>:
-
-{% for tag in post.tags %}
-
-    {% if loop.first %}
-        <a href="/tag/{{tag}}">{{tag}}</a>
-    {% else %}
-        , <a href="/tag/{{tag}}">{{tag}}</a>
-    {% endif %}
+  <tr>
+    <td>{{user['_id']}}</td>
+    <td>{{user['lastname']}}, {{user['firstname']}}</td>
+    <td>{{user['gender']}}</td>
+    <td>{{user['role']}}</td>
+  </tr>
 
 {% endfor %}
--->
 
-{% endfor %}
-</ul>
+</tbody>
+</table>
 
   </body>
 

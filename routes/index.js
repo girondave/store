@@ -41,7 +41,7 @@ module.exports = exports = function(app, db) {
 
     // User details
     app.get('/details', sessionHandler.displayDetailsPage);
-    //app.post('/signup', sessionHandler.handleSignup);
+    //app.post('/details', sessionHandler.handleUpdate);
 
     // Error handling middleware
     app.use(ErrorHandler);

@@ -158,7 +158,6 @@ this.displayDetailsPage =  function(req, res, next) {
                 if (err) {
                     // this was a duplicate
                     if (err.code == '11000') {
-                        errors['email_error'] = "El correo electrónico ya está en uso";
                         return res.render("signup", {title: "Registro de usuarios"
             , header: "Formulario de Registro"
             , email: ""
@@ -169,7 +168,7 @@ this.displayDetailsPage =  function(req, res, next) {
             , typeForDetails: "text"            
             , disableForDetails: null
             , buttonFunction: "Enviar"
-        }));
+        });
                     }
                     // this was a different error
                     else {

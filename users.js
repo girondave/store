@@ -67,6 +67,19 @@ function UsersDAO(db) {
         });
         
     }
+
+    this.getAllUsers = function(email, callback){
+        "use strict";
+
+        users.find().toArray(function(err, items) {
+            "use strict";
+
+            if (err) return callback(err, null);
+
+            console.log(items.length + " fueron encontrados");
+            callback(err, items);
+        });
+    }
 }
 
 module.exports.UsersDAO = UsersDAO;

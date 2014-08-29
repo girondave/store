@@ -38,10 +38,10 @@ function SessionHandler (db) {
 
             if (err) {
                 if (err.no_such_user) {
-                    return res.render("login", {email:email, password:"", login_error:"No such user"});
+                    return res.render("login", {email:email, password:"", login_error:"El usuario no existe"});
                 }
                 else if (err.invalid_password) {
-                    return res.render("login", {email:email, password:"", login_error:"Invalid password"});
+                    return res.render("login", {email:email, password:"", login_error:"La contraseña es inválida"});
                 }
                 else {
                     // Some other kind of error

@@ -86,7 +86,7 @@ function SessionHandler (db) {
             , passwordForDetails: "password"
             , checkboxForDetails: null
             , typeForDetails: "text"         
-            , disableForDetails: null
+            //, disableForDetails: "none"
             , buttonFunction: "Enviar"
         });
     }

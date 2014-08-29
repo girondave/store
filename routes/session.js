@@ -75,10 +75,33 @@ function SessionHandler (db) {
 
     this.displaySignupPage =  function(req, res, next) {
         "use strict";
-        res.render("signup", {email:"", password:"",
-                                    password_error:"",
-                                    email_error:"",
-                                    verify_error :""});
+        res.render("signup", {title: "Registro de usuarios"
+            , header: "Formulario de Registro"
+            , email: ""
+            , password: ""
+            , password_error: ""
+            , email_error: ""
+            , verify_error: ""
+            , typeForDetails: "text"            
+            , disableForDetails: null
+            , buttonFunction: "Enviar"
+        });
+    }
+
+this.displayDetailsPage =  function(req, res, next) {
+        "use strict";
+        res.render("signup", {title: "Detalles de usuario"
+            , header: "Detalles"
+            , email: req.email
+            , firstname: req.firstname
+            , lastname: req.lastname
+            , gender: req.gender
+            , role: req.role
+            , verify_error: ""
+            , typeForDetails: "hidden"
+            , disableForDetails: disable
+            , buttonFunction: "Guardar"
+        });
     }
 
     function validateSignup(email, password, verify, firstname, lastname, gender, role, errors) {

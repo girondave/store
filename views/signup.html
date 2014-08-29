@@ -33,7 +33,7 @@
 					<section>
 						<label class="input">
 							<i class="icon-append fa fa-envelope-o"></i>
-							<input type="email" name="email" placeholder="Email address">
+							<input type="email" name="email" placeholder="Correo electrónico">
 							<b class="tooltip tooltip-bottom-right">Se necesita para verificar su cuenta</b>
 						</label>
 					</section>
@@ -41,7 +41,7 @@
 					<section>
 						<label class="input">
 							<i class="icon-append fa fa-lock"></i>
-							<input type="password" name="password" placeholder="Password" id="password" value="{{email}}">
+							<input type="password" name="password" placeholder="Contraseña" id="password" value="{{email}}">
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
@@ -49,7 +49,7 @@
 					<section>
 						<label class="input">
 							<i class="icon-append fa fa-lock"></i>
-							<input type="password" name="verify" placeholder="Confirm password">
+							<input type="password" name="verify" placeholder="Confirme la contraseña">
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
@@ -73,13 +73,25 @@
 						<label class="select">
 							<select name="gender">
 								<option value="0" selected disabled>Género</option>
-								<option value="1">Masculino</option>
-								<option value="2">Femenino</option>
+								<option value="M">Masculino</option>
+								<option value="F">Femenino</option>
 							</select>
 							<i></i>
 						</label>
 					</section>
 					
+					<section>
+						<label class="select">
+							<select name="role">
+								<option value="0" selected disabled>Rol</option>
+								<option value="Administrador">Administrador</option>
+								<option value="Vendedor">Vendedor</option>
+								<option value="Secretaria">Secretaria</option>
+							</select>
+							<i></i>
+						</label>
+					</section>
+
 					<section>
 						<label class="checkbox"><input type="checkbox" name="terms" id="terms"><i></i>Estoy de acuerdo con los Términos y Condiciones</label>
 					</section>

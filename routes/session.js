@@ -81,7 +81,8 @@ function SessionHandler (db) {
                                     verify_error :""});
     }
 
-    function validateSignup(email, password, verify, errors) {
+    function validateSignup(email, password, verify, firstname, lastname, gender, role, errors) {
+        //email, password, verify, errors) {
         "use strict";
         var PASS_RE = /^.{3,20}$/;
         var EMAIL_RE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -90,19 +91,25 @@ function SessionHandler (db) {
         errors['verify_error'] = "";
         errors['email_error'] = "";
 
+        if (gender==0) {
+            errors['gender_error'] = "Género no seleccionado";
+            return false;
+        }
         if (!PASS_RE.test(password)) {
-            errors['password_error'] = "invalid password.";
+            errors['password_error'] = "Contraseña no válida";
+            return false;
+        }
+        if (role==0) {
+            errors['role_error'] = "Rol no seleccionado";
             return false;
         }
         if (password != verify) {
-            errors['verify_error'] = "password must match";
+            errors['verify_error'] = "Las contraseñas deben coincidir";
             return false;
         }
-        console.log(EMAIL_RE.test(email));
-        console.log(email);
         if (!EMAIL_RE.test(email)) {
-                errors['email_error'] = "invalid email address";
-                return false;
+            errors['email_error'] = "Correo no válido";
+            return false;
         }
         return true;
     }
@@ -111,21 +118,24 @@ function SessionHandler (db) {
         "use strict";
 
         var email = req.body.email
-        console.log('req.body.email = ' + email);
-        //var email = req.body.email
         var password = req.body.password
+        var firstname = req.body.firstname
+        var lastname = req.body.lastname
         var verify = req.body.verify
+        var gender = req.body.gender
+        var role = req.body.role
+
 
         // set these up in case we have an error case
         var errors = {'email': email}
-        if (validateSignup(email, password, verify, errors)) {
-            users.addUser(email, password, function(err, user) {
+        if (validateSignup(email, password, verify, firstname, lastname, gender, role, errors)) {
+            users.addUser(email, password, firstname, lastname, gender, role, function(err, user) {
                 "use strict";
 
                 if (err) {
                     // this was a duplicate
                     if (err.code == '11000') {
-                        errors['email_error'] = "email already in use. Please choose another";
+                        errors['email_error'] = "El correo electrónico ya está en uso";
                         return res.render("signup", errors);
                     }
                     // this was a different error
@@ -154,7 +164,7 @@ function SessionHandler (db) {
         "use strict";
 
         if (!req.email) {
-            console.log("welcome: can't identify user...redirecting to signup");
+            console.log("Bienvenido: no se ha identificado. Por favor, inicie sesión.");
             return res.redirect("/signup");
         }
 

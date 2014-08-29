@@ -33,17 +33,18 @@
     	<body class="bg-cyan">
 		<div class="body body-s">		
 			<form method="post" id="sky-form" class="sky-form">
-				<header>Iniciar Sesión</header>
-				
-				<fieldset>					
-					<section>
+				<header>Iniciar sesión</header>
+
+				<fieldset>
+                	<section>
 						<div class="row">
 							<label class="label col col-4">E-mail</label>
 							<div class="col col-8">
 								<label class="input">
 									<i class="icon-append fa fa-user"></i>
-									<input type="email" name="email" value="{{username}}">
+									<input type="email" name="email" value="{{username}}" placeholder="Email">
 								</label>
+                                
 							</div>
 						</div>
 					</section>
@@ -54,8 +55,11 @@
 							<div class="col col-8">
 								<label class="input">
 									<i class="icon-append fa fa-lock"></i>
-									<input type="password" name="password" value="">
+									<input type="password" name="password" value="" placeholder="Contraseña">
 								</label>
+                                <em class="invalid" for="password">
+                                {{login_error}}
+                                </em>
 								<div class="note"><a href="#sky-form2" class="modal-opener">¿Olvidaste la contraseña?</a></div>
 							</div>
 						</div>

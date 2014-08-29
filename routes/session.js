@@ -38,10 +38,10 @@ function SessionHandler (db) {
 
             if (err) {
                 if (err.no_such_user) {
-                    return res.render("login", {email:email, password:"", login_error:"No such user"});
+                    return res.render("login", {email:email, password:"", login_error:"El usuario no existe"});
                 }
                 else if (err.invalid_password) {
-                    return res.render("login", {email:email, password:"", login_error:"Invalid password"});
+                    return res.render("login", {email:email, password:"", login_error:"La contraseña es inválida"});
                 }
                 else {
                     // Some other kind of error
@@ -75,10 +75,38 @@ function SessionHandler (db) {
 
     this.displaySignupPage =  function(req, res, next) {
         "use strict";
-        res.render("signup", {email:"", password:"",
-                                    password_error:"",
-                                    email_error:"",
-                                    verify_error :""});
+        res.render("signup", {title: "Registro de usuarios"
+            , header: "Formulario de Registro"
+            , email: ""
+            , password: ""
+            , password_error: ""
+            , email_error: ""
+            , verify_error: ""
+            , extraButtons: "none"   
+            , passwordForDetails: "password"
+            , checkboxForDetails: null
+            , typeForDetails: "text"         
+            //, disableForDetails: "none"
+            , buttonFunction: "Enviar"
+        });
+    }
+
+this.displayDetailsPage =  function(req, res, next) {
+        "use strict";
+        res.render("signup", {title: "Detalles de usuario"
+            , header: "Detalles"
+            , email: req.email
+            , firstname: req.firstname
+            , lastname: req.lastname
+            , gender: req.gender
+            , role: req.role
+            , verify_error: ""
+            , extraButtons: null   
+            , passwordForDetails: "hidden"
+            , checkboxForDetails: "none"
+            , disableForDetails: "disabled"
+            , buttonFunction: "Guardar"
+        });
     }
 
     function validateSignup(email, password, verify, firstname, lastname, gender, role, errors) {
@@ -135,8 +163,22 @@ function SessionHandler (db) {
                 if (err) {
                     // this was a duplicate
                     if (err.code == '11000') {
+<<<<<<< HEAD
                         errors['email_error'] = "El correo electrónico ya está en uso";
                         return res.render("signup", errors);
+=======
+                        return res.render("signup", {title: "Registro de usuarios"
+            , header: "Formulario de Registro"
+            , email: ""
+            , password: ""
+            , password_error: ""
+            , email_error: "El correo ya esta en uso"
+            , verify_error: ""
+            , typeForDetails: "text"            
+            , disableForDetails: null
+            , buttonFunction: "Enviar"
+        });
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
                     }
                     // this was a different error
                     else {

@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html>
 	<head>
-		<title>Registro de usuarios</title>
+		<title>{{title}}</title>
 		
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -23,33 +23,50 @@
 			<script src="js/sky-forms-ie8.js"></script>
 		<![endif]-->
 	</head>
-	
+
 	<body class="bg-cyan">
 		<div class="body body-s">		
 			<form method="post" action="" id="sky-form" class="sky-form">
-				<header>Formulario de Registro</header>
+				<header>{{header}}</header>
 				
 				<fieldset>					
 					<section>
 						<label class="input">
 							<i class="icon-append fa fa-envelope-o"></i>
+<<<<<<< HEAD
 							<input type="email" name="email" placeholder="Correo electrónico">
+=======
+							<input type="email" name="email" placeholder="Correo electrónico" value="{{email}}" id="email" {{disableForDetails}}>
+                        <em class="invalid" for="email">
+                                {{email_error}}
+                        </em>							
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
 							<b class="tooltip tooltip-bottom-right">Se necesita para verificar su cuenta</b>
 						</label>
 					</section>
 					
 					<section>
-						<label class="input">
+						<label class="input" style="display:{{checkboxForDetails}};">
 							<i class="icon-append fa fa-lock"></i>
+<<<<<<< HEAD
 							<input type="password" name="password" placeholder="Contraseña" id="password" value="{{email}}">
+=======
+							<input type="{{passwordForDetails}}" name="password" placeholder="Contraseña" id="password" value="{{password}}">
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
 					
 					<section>
+<<<<<<< HEAD
 						<label class="input">
 							<i class="icon-append fa fa-lock"></i>
 							<input type="password" name="verify" placeholder="Confirme la contraseña">
+=======
+						<label class="input" style="display:{{checkboxForDetails}};">
+							<i class="icon-append fa fa-lock" ></i>
+							<input type="{{passwordForDetails}}" name="verify" placeholder="Confirme la contraseña" value="{{password}}">
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
@@ -59,12 +76,12 @@
 					<div class="row">
 						<section class="col col-6">
 							<label class="input">
-								<input type="text" name="firstname" placeholder="Nombre">
+								<input type="text" name="firstname" placeholder="Nombre" value="{{firstname}}">
 							</label>
 						</section>
 						<section class="col col-6">
 							<label class="input">
-								<input type="text" name="lastname" placeholder="Apellido">
+								<input type="text" name="lastname" placeholder="Apellido" value="{{lastname}}">
 							</label>
 						</section>
 					</div>
@@ -73,8 +90,13 @@
 						<label class="select">
 							<select name="gender">
 								<option value="0" selected disabled>Género</option>
+<<<<<<< HEAD
 								<option value="M">Masculino</option>
 								<option value="F">Femenino</option>
+=======
+								<option value="Masculino">Masculino</option>
+								<option value="Femenino">Femenino</option>
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
 							</select>
 							<i></i>
 						</label>
@@ -93,11 +115,17 @@
 					</section>
 
 					<section>
+<<<<<<< HEAD
 						<label class="checkbox"><input type="checkbox" name="terms" id="terms"><i></i>Estoy de acuerdo con los Términos y Condiciones</label>
+=======
+						<label class="checkbox" style="display:{{checkboxForDetails}};"><input type="checkbox" style="display:{{checkboxForDetails}};" name="terms" id="terms"><i></i>Estoy de acuerdo con los Términos y Condiciones</label>
+>>>>>>> 8284a21f0eaabf58cf3205442735d29bd83bdcf1
 					</section>
 				</fieldset>
 				<footer>
-					<button type="submit" class="button">Enviar</button>
+					<button type="submit" class="button">{{buttonFunction}}</button>
+					<button type="submit" style="display:{{extraButtons}};" class="button">Eliminar</button>
+					<button type="submit" style="display:{{extraButtons}};"class="button">Cancelar</button>
 				</footer>
 			</form>			
 		</div>
@@ -141,6 +169,10 @@
 						{
 							required: true
 						},
+						role:
+						{
+							required: true
+						},
 						terms:
 						{
 							required: true
@@ -157,7 +189,7 @@
 						email:
 						{
 							required: 'Introduzca su email',
-							email: 'Email no válido'
+							email: '{{username_error}}'
 						},
 						password:
 						{
@@ -179,6 +211,10 @@
 						gender:
 						{
 							required: 'Seleccione su género'
+						},
+						role:
+						{
+							required: 'Seleccione un rol'
 						},
 						terms:
 						{

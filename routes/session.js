@@ -82,7 +82,10 @@ function SessionHandler (db) {
             , password_error: ""
             , email_error: ""
             , verify_error: ""
-            , typeForDetails: "text"            
+            , extraButtons: "none"   
+            , passwordForDetails: "password"
+            , checkboxForDetails: null
+            , typeForDetails: "text"         
             , disableForDetails: null
             , buttonFunction: "Enviar"
         });
@@ -98,8 +101,10 @@ this.displayDetailsPage =  function(req, res, next) {
             , gender: req.gender
             , role: req.role
             , verify_error: ""
-            , typeForDetails: "hidden"
-            , disableForDetails: disable
+            , extraButtons: null   
+            , passwordForDetails: "hidden"
+            , checkboxForDetails: "none"
+            , disableForDetails: "disabled"
             , buttonFunction: "Guardar"
         });
     }

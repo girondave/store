@@ -23,7 +23,7 @@
 			<script src="js/sky-forms-ie8.js"></script>
 		<![endif]-->
 	</head>
-	
+
 	<body class="bg-cyan">
 		<div class="body body-s">		
 			<form method="post" action="" id="sky-form" class="sky-form">
@@ -33,24 +33,24 @@
 					<section>
 						<label class="input">
 							<i class="icon-append fa fa-envelope-o"></i>
-							<input type="email" name="email" placeholder="Correo electrónico" value="{{email}}" {{disabledForDetails}}>
+							<input type="email" name="email" placeholder="Correo electrónico" value="{{email}}" id="email" disabled="{{disableForDetails}}">
 							{{email_error}}
 							<b class="tooltip tooltip-bottom-right">Se necesita para verificar su cuenta</b>
 						</label>
 					</section>
 					
 					<section>
-						<label class="input">
+						<label class="input" style="display:{{checkboxForDetails}};">
 							<i class="icon-append fa fa-lock"></i>
-							<input type="password" name="password" placeholder="Contraseña" id="password" value="{{password}}">
+							<input type="{{passwordForDetails}}" name="password" placeholder="Contraseña" id="password" value="{{password}}">
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
 					
 					<section>
-						<label class="input">
-							<i class="icon-append fa fa-lock"></i>
-							<input type="password" name="verify" placeholder="Confirme la contraseña" value="{{password}}">
+						<label class="input" style="display:{{checkboxForDetails}};">
+							<i class="icon-append fa fa-lock" ></i>
+							<input type="{{passwordForDetails}}" name="verify" placeholder="Confirme la contraseña" value="{{password}}">
 							<b class="tooltip tooltip-bottom-right">No olvide su contraseña</b>
 						</label>
 					</section>
@@ -74,8 +74,8 @@
 						<label class="select">
 							<select name="gender">
 								<option value="0" selected disabled>Género</option>
-								<option value="M">Masculino</option>
-								<option value="F">Femenino</option>
+								<option value="Masculino">Masculino</option>
+								<option value="Femenino">Femenino</option>
 							</select>
 							<i></i>
 						</label>
@@ -94,11 +94,13 @@
 					</section>
 
 					<section>
-						<label class="checkbox"><input type="checkbox" name="terms" id="terms" {{disableForDetails}}><i></i>Estoy de acuerdo con los Términos y Condiciones</label>
+						<label class="checkbox" style="display:{{checkboxForDetails}};"><input type="checkbox" style="display:{{checkboxForDetails}};" name="terms" id="terms"><i></i>Estoy de acuerdo con los Términos y Condiciones</label>
 					</section>
 				</fieldset>
 				<footer>
-					<button type="submit" class="button">Enviar</button>
+					<button type="submit" class="button">{{buttonFunction}}</button>
+					<button type="submit" style="display:{{extraButtons}};" class="button">Eliminar</button>
+					<button type="submit" style="display:{{extraButtons}};"class="button">Cancelar</button>
 				</footer>
 			</form>			
 		</div>

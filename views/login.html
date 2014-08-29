@@ -36,11 +36,13 @@
 				<header>Iniciar sesión</header>
 
 				<fieldset>
-					<section>
+                <!-->
+                	<section>
 						<div class="row">
 							<label class="label col col-8">{{login_error}}</label>
 						</div>
 					</section>
+                <!-->
 
 					<section>
 						<div class="row">
@@ -50,6 +52,7 @@
 									<i class="icon-append fa fa-user"></i>
 									<input type="email" name="email" value="{{username}}">
 								</label>
+                                
 							</div>
 						</div>
 					</section>
@@ -58,10 +61,13 @@
 						<div class="row">
 							<label class="label col col-4">Contraseña</label>
 							<div class="col col-8">
-								<label class="input">
+								<label class="input state-error">
 									<i class="icon-append fa fa-lock"></i>
 									<input type="password" name="password" value="">
 								</label>
+                                <em class="invalid" for="email">
+                                {{login_error}}
+                                </em>
 								<div class="note"><a href="#sky-form2" class="modal-opener">¿Olvidaste la contraseña?</a></div>
 							</div>
 						</div>
@@ -137,7 +143,7 @@
 						email:
 						{
 							required: 'Por favor introduzca su correo electrónico',
-							email: '{{login_error}}'
+							email: 'Correo electrónico no válido'
 						},
 						password:
 						{
@@ -172,7 +178,7 @@
 						email:
 						{
 							required: 'Por favor introduzca su correo electrónico',
-							email: '{{login_error}}'
+							email: 'Correo electrónico no válido'
 						}
 					},
 										

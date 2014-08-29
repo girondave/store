@@ -793,6 +793,17 @@
 	line-height: 15px;
 	color: #ee9393;
 }
+
+.sky-form .input + em {
+	display: block;
+	margin-top: 6px;
+	padding: 0 1px;
+	font-style: normal;
+	font-size: 11px;
+	line-height: 15px;
+	color: #ee9393;
+}
+
 .sky-form .rating.state-error + em {
 	margin-top: -4px;
 	margin-bottom: 4px;

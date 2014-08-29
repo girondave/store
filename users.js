@@ -13,7 +13,7 @@ function UsersDAO(db) {
 
     var users = db.collection("users");
 
-    this.addUser = function(email, password, callback) {
+    this.addUser = function(email, password, firstname, lastname, gender, role, callback) {
         "use strict";
 
         // Generate password hash
@@ -21,7 +21,13 @@ function UsersDAO(db) {
         var password_hash = bcrypt.hashSync(password, salt);
 
         // Create user document
-        var user = {'_id': email, 'password': password_hash};
+        var user = {'_id': email
+        , 'password': password_hash
+        , 'firstname': firstname
+        , 'lastname': lastname
+        , 'gender': gender
+        , 'role': role
+        };
 
         users.insert(user, function(err, inserted) {
 
@@ -66,6 +72,19 @@ function UsersDAO(db) {
             validateUserDoc(err,doc);
         });
         
+    }
+
+    this.getAllUsers = function(email, callback){
+        "use strict";
+
+        users.find().toArray(function(err, items) {
+            "use strict";
+
+            if (err) return callback(err, null);
+
+            console.log(items.length + " fueron encontrados");
+            callback(err, items);
+        });
     }
 }
 

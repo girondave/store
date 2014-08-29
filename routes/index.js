@@ -41,4 +41,8 @@ module.exports = exports = function(app, db) {
 
     // Error handling middleware
     app.use(ErrorHandler);
+
+
+    // Administracion de usuarios
+    app.get('/useradmin', contentHandler.displayUsersInfo);
 }

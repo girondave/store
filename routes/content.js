@@ -1,4 +1,5 @@
 var PostsDAO = require('../posts').PostsDAO
+  , UsersDAO = require('../users').UsersDAO
   , sanitize = require('validator').sanitize; // Helper to sanitize form input
 
 /* The ContentHandler must be constructed with a connected db */
@@ -6,6 +7,31 @@ function ContentHandler (db) {
     "use strict";
 
     var posts = new PostsDAO(db);
+    var users = new UsersDAO(db);
+
+
+    //Administración de Usuarios
+    this.displayUsersInfo = function(req, res, next) {
+        "use strict";
+
+        if (!req.email) {
+            console.log("Bienvenido: su usuario no pudo ser identificado\
+                ... Por favor, inicie sesión");
+            return res.redirect("/login");
+        }
+
+        users.getAllUsers(req.email, function(err, resultado) {
+            "use strict";
+
+            if (err) return next(err);
+
+            return res.render('useradmin', 
+                {   email: req.email,
+                    usuarios: resultado
+                });
+        });
+    }
+
 
     this.displayMainPage = function(req, res, next) {
         "use strict";

@@ -2,11 +2,8 @@
 
 <html>
   <head>
-<<<<<<< HEAD
-    <title>Bienvenidos DESGRACIADOS MALNACIDOS!!!, {{username}}</title>
-=======
-    <title>Bienvenido ESTO LO AGREGE DESDE github.com PABLO, {{username}}</title>
->>>>>>> origin/master
+    <title>Bienvenido, {{email}}</title>
+    
     <style type="text/css">
       .label {text-align: right}
       .error {color: red}
@@ -15,15 +12,24 @@
   </head>
 
   <body>
-    <p> <big>Bienvenido, {{username}}</big> </p>
-    <blockquote>Sand&iacute;a</blockquote>
+    <p> <big>Bienvenido, {{email}}</big> </p>
+    
 <p>
 <ul>
-<li><a href="/">Ir a la página principal</a></li>
-<li>
-<a href="/logout">Cerrar sesión</a>
-</li>
+  
+  <li>
+    <a href="/">Ir a la página principal</a>
+  </li>
 
+  <li>
+    <a href="/useradmin">Administración de Usuarios</a>
+  </li>
+
+  <li>
+    <a href="/logout">Cerrar sesión</a>
+  </li>
+
+</ul>
 <!--
 <li>
 <a href="/newpost">Create a New Post</a>

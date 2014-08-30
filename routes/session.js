@@ -168,7 +168,7 @@ this.displayDetailsPage =  function(req, res, next) {
             , email: ""
             , password: ""
             , password_error: ""
-            , email_error: "El correo ya esta en uso"
+            , email_error: "El correo ya está en uso"
             , verify_error: ""
             , typeForDetails: "text"            
             , disableForDetails: null

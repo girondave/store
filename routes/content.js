@@ -36,14 +36,14 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
-        if (!req.email) return res.redirect("/login");
+        if(!req.email){
+                return res.render('home', {
+                    title: 'Inicio',
+                    username: req.email
+            });
+        }
 
-        "use strict";
-
-            return res.render('home', {
-                title: 'Inicio',
-                username: req.email
-        });
+        return res.redirect("/welcome");
     }
 
     this.displayMainPageByTag = function(req, res, next) {

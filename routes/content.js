@@ -36,16 +36,9 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
-        posts.getPosts(10, function(err, results) {
-            "use strict";
-
-            if (err) return next(err);
-
-            return res.render('blog_template', {
-                title: 'blog homepage',
-                username: req.username,
-                myposts: results
-            });
+            return res.render('home', {
+                title: 'Inicio',
+                username: req.username
         });
     }
 

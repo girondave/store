@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>WebApp</title>
+<title>{{title}}</title>
 </head>
 <body>
 
 {% if username %}
-Bienvenido {{username}}        <a href="/logout">Cerrar sesión</a> | <a href="/newpost">New Post</a><p>
+
+Bienvenido, {{username}}
+
+<a href="/logout">Cerrar sesión</a> |
+<a href="/newpost">No me des click</a><p>
+
 {% else %}
-¡Aún no ha iniciado sesión!        <a href="/login">Iniciar sesión</a> | <a href="/signup">Crear usuario</a><p>
+
+¡Aún no ha iniciado sesión! |
+<a href="/login">Iniciar sesión</a><p>
+
 {% endif %}
 
 <h1>WebApp</h1>
 
+
+<!-- Contenido original
 {% for post in myposts %}
 <h2><a href="/post/{{post['permalink']}}">{{post['title']}}</a></h2>
 Posted {{post['date']}} <i>By {{post['author']}}</i><br>
@@ -34,6 +44,8 @@ Comments:
 {% endfor %}
 {% endfor %}
 <p>
+-->
+
 </body>
 </html>
 

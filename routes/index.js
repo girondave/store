@@ -46,6 +46,8 @@ module.exports = exports = function(app, db) {
     // Error handling middleware
     app.use(ErrorHandler);
 
+    // No Site = Under construction
+    app.get('/nosite', contentHandler.noSite);
 
     // Administracion de usuarios
     app.get('/useradmin', contentHandler.displayUsersInfo);

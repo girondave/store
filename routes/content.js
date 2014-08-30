@@ -201,6 +201,12 @@ function ContentHandler (db) {
             return res.redirect("/post/" + permalink)
         });
     }
+
+    this.noSite = function(req, res, next) {
+        "use strict";
+
+        return res.render('nosite', {});
+    }
 }
 
 module.exports = ContentHandler;

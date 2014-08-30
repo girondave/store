@@ -55,7 +55,7 @@ function SessionHandler (db) {
                 if (err) return next(err);
 
                 res.cookie('session', session_id);
-                return res.redirect('/welcome');
+                return res.redirect('/welcome', req.email);
             });
         });
     }

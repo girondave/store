@@ -55,7 +55,7 @@ function SessionHandler (db) {
                 if (err) return next(err);
 
                 res.cookie('session', session_id);
-                return res.redirect('/welcome', req.email);
+                return res.render('welcome', req.body.email);
             });
         });
     }
@@ -202,7 +202,7 @@ this.displayDetailsPage =  function(req, res, next) {
 
         if (!req.email) {
             console.log("Bienvenido: no se ha identificado. Por favor, inicie sesión.");
-            return res.redirect("/signup");
+            return res.redirect("/login");
         }
 
         return res.render("welcome", {'email':req.email})

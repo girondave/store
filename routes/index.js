@@ -51,4 +51,7 @@ module.exports = exports = function(app, db) {
 
     // Administracion de usuarios
     app.get('/useradmin', contentHandler.displayUsersInfo);
+
+    /Recuperacion de contraseña
+    app.post('/reset', sessionHandler.emailExists)
 }

@@ -230,13 +230,13 @@ this.displayDetailsPage =  function(req, res, next) {
                 }
             }
             //LLAMAR A LA FUNCION PARA MANDAR EL CORREO EN SESSIONS EN ROOT (CAMBIAR EL NOMBRE A LA FUNCION)
-            sessions.startSession(user['_id'], function(err, session_id) {
+            sessions.SendEmail(user['email'], function(err, session_id) {
                 "use strict";
 
                 if (err) return next(err);
 
                 res.cookie('session', session_id);
-                return res.redirect('/welcome');
+                return res.redirect('/reset');
             });
         });
     }

@@ -26,10 +26,6 @@
     <a href="/logout">Cerrar sesión</a>
   </li>
 
-  <li>
-    <a href="/details">Detalle de Usuario</a>
-  </li>
-
 </ul>
 
 
@@ -47,7 +43,8 @@
 {% for user in usuarios %}
 
   <tr>
-    <td>{{user['_id']}}</td>
+
+    <td><a href="/details">{{user['_id']}}</a></td>
     <td>{{user['lastname']}}, {{user['firstname']}}</td>
     <td>{{user['gender']}}</td>
     <td>{{user['role']}}</td>
@@ -56,7 +53,6 @@
       {{user['role']}}
     </td>
   
-
   </tr>
 
 {% endfor %}

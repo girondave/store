@@ -36,7 +36,7 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
-        if(!req.email){
+        if(!req.session.logged){
                 return res.render('home', {
                     title: 'Inicio',
                     username: req.email

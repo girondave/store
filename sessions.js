@@ -64,6 +64,15 @@ function SessionsDAO(db) {
 
     this.SendEmail = function(email, callback) {
         "use strict";
+        var keylist="abcdefghijklmnopqrstuvwxyz123456789"
+        var recoverypass=''
+
+        this.generatepass=function(){
+        recoverypass=''
+        for (i=0;i<8;i++)
+        recoverypass+=keylist.charAt(Math.floor(Math.random()*keylist.length))
+        return recoverypass
+    }
 
         var smtpTransport = nodemailer.createTransport("SMTP",{
       service: "hotmail",
@@ -78,7 +87,7 @@ function SessionsDAO(db) {
     from: "webappfpi<webappfpi@hotmail.com>", // sender address
     to: email, // list of receivers
     subject: "Recuperación de contraseña", // Subject line
-    html: "Email enviado desde webappfpi" // html body
+    html: recoverypass // html body
   }
 
                     

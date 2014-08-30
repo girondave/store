@@ -65,7 +65,7 @@ function SessionsDAO(db) {
         "use strict";
 
         var smtpTransport = nodemailer.createTransport("SMTP",{
-      service: "Gmail",
+      service: "hotmail",
       auth: {
       user: "webappfpi@hotmail.com",
       pass: "Appadmin"

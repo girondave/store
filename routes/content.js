@@ -36,6 +36,10 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
+        if (!req.email) return res.redirect("/login");
+
+        "use strict";
+
             return res.render('home', {
                 title: 'Inicio',
                 username: req.email

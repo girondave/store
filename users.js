@@ -100,17 +100,7 @@ function UsersDAO(db) {
             if (err) return callback(err, null);
 
             if (user) {
-                if (bcrypt.compareSync(password, user.password)) {
-                    callback(null, user);
-                }
-                else {
-                    var invalid_password_error = new Error("Invalid password");
-                    // Set an extra field so we can distinguish this from a db error
-                    invalid_password_error.invalid_password = true;
-                    callback(invalid_password_error, null);
-                }
-            }
-            else {
+            
                 var no_such_user_error = new Error("User: " + user + " does not exist");
                 // Set an extra field so we can distinguish this from a db error
                 no_such_user_error.no_such_user = true;
@@ -118,7 +108,7 @@ function UsersDAO(db) {
             }
         }
 
-        users.findOne({"_id":username}, function(err, doc){
+        users.find({"_id":email}, function(err, doc){
             validateEmail(err,doc);
         });
         

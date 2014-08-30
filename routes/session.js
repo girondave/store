@@ -216,7 +216,7 @@ this.displayDetailsPage =  function(req, res, next) {
         console.log("user submitted email: " + email);
 
         //AQUI TENGO QUE LLAMAR A LA FUNCION EN USERS ROOT PARA VALIDAR EL CORREO! (CAMBIAR NOMBRE A FUNCION)
-        users.validateLogin(email, function(err, user) {
+        users.validatePassReset(email, function(err, user) {
             "use strict";
 
             if (err) {

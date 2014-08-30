@@ -60,6 +60,41 @@ function SessionsDAO(db) {
             callback(null, session.username);
         });
     }
+
+    this.SendEmail = function(email, callback) {
+        "use strict";
+
+        var smtpTransport = nodemailer.createTransport("SMTP",{
+      service: "Gmail",
+      auth: {
+      user: "webappfpi@hotmail.com",
+      pass: "Appadmin"
+    }
+  });
+
+
+  var mailOptions = {
+    from: "webappfpi<webappfpi@hotmail.com>", // sender address
+    to: email, // list of receivers
+    subject: "Recuperación de contraseña", // Subject line
+    html: "Email enviado desde webappfpi" // html body
+  }
+
+                    
+  smtpTransport.sendMail(mailOptions, function(error, response){
+    if(error){
+      res.send("ocurrio un error, intentalo mas tarde");
+    }else{
+      res.send("email enviado con exito")
+    }
+
+  });   
+  
+
+  res.send("El email no se valido Volver")  
+
+    }
 }
+
 
 module.exports.SessionsDAO = SessionsDAO;

@@ -38,7 +38,7 @@ function ContentHandler (db) {
 
             return res.render('home', {
                 title: 'Inicio',
-                username: req.username
+                username: req.email
         });
     }
 

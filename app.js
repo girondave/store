@@ -1,6 +1,9 @@
 var express = require('express')
   //variable path para accesar CSS
   , path = require('path')
+  //variable nodemailer para enviar email
+  , nodemailer = require("nodemailer")
+
   , app = express() // Web framework to handle routing requests
   //, cookieParser = require('cookie-parser')
   //, bodyParser = require('body-parser')
@@ -22,6 +25,10 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
 
     // Express middleware to populate 'req.body' so we can access POST variables
     app.use(express.bodyParser());
+
+    //Necesarios para utilizar nodemailer
+    app.use(express.methodOverride());
+    app.use(app.router);
 
     // Express middleware para usar CSS
     app.use(express.static(path.join(__dirname, 'public')));

@@ -86,6 +86,43 @@ function UsersDAO(db) {
             callback(err, items);
         });
     }
+
+    
+
+    //AQUI LA FUNCION PARA VALIDAR EL CORREO EN PASS RESET
+    this.validatePassReset = function(email, callback) {
+        "use strict";
+
+        // Callback to pass to MongoDB that validates a user document
+        function validateEmail(err, user) {
+            "use strict";
+
+            if (err) return callback(err, null);
+
+            if (user) {
+                if (bcrypt.compareSync(password, user.password)) {
+                    callback(null, user);
+                }
+                else {
+                    var invalid_password_error = new Error("Invalid password");
+                    // Set an extra field so we can distinguish this from a db error
+                    invalid_password_error.invalid_password = true;
+                    callback(invalid_password_error, null);
+                }
+            }
+            else {
+                var no_such_user_error = new Error("User: " + user + " does not exist");
+                // Set an extra field so we can distinguish this from a db error
+                no_such_user_error.no_such_user = true;
+                callback(no_such_user_error, null);
+            }
+        }
+
+        users.findOne({"_id":username}, function(err, doc){
+            validateEmail(err,doc);
+        });
+        
+    }
 }
 
 module.exports.UsersDAO = UsersDAO;

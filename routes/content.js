@@ -36,16 +36,15 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
-        var cookiesSession = req.cookies.session;
         var varSession = req.session;
+        var username = varSession.firstname + " " + varSession.lastname;
 
-        console.log("Corriendo displayMainPage: cookiesSession" + JSON.stringify(cookiesSession));
-        console.log("Corriendo displayMainPage: session" + JSON.stringify(varSession));
+       console.log("Corriendo displayMainPage: session" + JSON.stringify(varSession) +varSession.logged+ username);
         
         if(!varSession.logged){
                 return res.render('home', {title: 'Inicio'});
         }else{
-            return res.redirect("/welcome");
+            return res.redirect('/welcome');
         }
     }
 

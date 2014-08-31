@@ -23,6 +23,12 @@ function SessionsDAO(db) {
 
         // Create session document
         var session = {'username': username, '_id': session_id, 'firstname': firstname, 'lastname': lastname, 'logged':true, 'role':role}
+        var cookSes = req.session;
+        cookSes.role = role;
+        cookSes.logged = true;
+        cookSes.firstname = firstname;
+        cookSes.lastname = lastname;
+        cookSes.username = username;
 
         // Insert session document
         sessions.insert(session, function (err, result) {

@@ -209,12 +209,15 @@ this.displayDetailsPage =  function(req, res, next) {
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
 
-        if (!req.email) {
-            console.log("Bienvenido: no se ha identificado. Por favor, inicie sesión.");
+        var varSession = req.cookies.session;
+        var username = varSession.firstname + " " + varSession.lastname;
+
+        if (!varSession.logged) {
+            console.log("No se ha identificado. Por favor, inicie sesión.");
             return res.redirect("/login");
         }
 
-        return res.render("welcome", {'email':req.email})
+        return res.render("welcome", {'username':username})
     }
 
     this.emailExists = function(req, res, next) {

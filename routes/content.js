@@ -41,10 +41,10 @@ function ContentHandler (db) {
 
        console.log("Corriendo displayMainPage: session" + JSON.stringify(varSession) +varSession.logged+ username);
         
-        if(!varSession.logged){
-                return res.render('home', {title: 'Inicio'});
+        if(varSession.logged){
+            return res.redirect('/welcome');                
         }else{
-            return res.redirect('/welcome');
+            return res.render('home', {title: 'Inicio'});
         }
     }
 

@@ -61,18 +61,29 @@ function SessionHandler (db) {
             sessions.startSession(user['_id'], user['firstname'], user['lastname'], user['role'], function(err, session_id) {
                 "use strict";
 
-                if (err) return next(err);
-
-                res.cookie('session', session_id);
-                return res.render('welcome', req.body.email);
+                if (err) {
+                    return next(err);
+                }else{
+                    res.cookie('session', session_id);
+                    var cookSes = req.session;
+                    cookSes.role = user['role'];
+                    cookSes.logged = true;
+                    cookSes.firstname = user['firstname'];
+                    cookSes.lastname = user['lastname'];
+                    cookSes.username = user['_id'];
+                    return res.render('welcome', req.body.email);
+                }
             });
         });
     }
 
+    // revisado
     this.displayLogoutPage = function(req, res, next) {
         "use strict";
 
         var session_id = req.cookies.session;
+        req.session.destroy();
+
         sessions.endSession(session_id, function (err) {
             "use strict";
 
@@ -80,6 +91,7 @@ function SessionHandler (db) {
             res.cookie('session', '');
             return res.redirect('/');
         });
+
     }
 
     this.displaySignupPage =  function(req, res, next) {
@@ -206,18 +218,20 @@ this.displayDetailsPage =  function(req, res, next) {
         }
     }
 
+    // revisado
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
 
-        var varSession = req.cookies.session;
+        var varSession = req.session;
         var username = varSession.firstname + " " + varSession.lastname;
 
-        if (!varSession.logged) {
+        if(varSession.logged){
+            return res.render("welcome", {'username':username});                
+        }else{
             console.log("No se ha identificado. Por favor, inicie sesión.");
             return res.redirect("/login");
         }
 
-        return res.render("welcome", {'username':username})
     }
 
     this.emailExists = function(req, res, next) {

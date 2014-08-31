@@ -23,12 +23,6 @@ function SessionsDAO(db) {
 
         // Create session document
         var session = {'username': username, '_id': session_id, 'firstname': firstname, 'lastname': lastname, 'logged':true, 'role':role}
-        var cookSes = req.session;
-        cookSes.role = role;
-        cookSes.logged = true;
-        cookSes.firstname = firstname;
-        cookSes.lastname = lastname;
-        cookSes.username = username;
 
         // Insert session document
         sessions.insert(session, function (err, result) {
@@ -37,10 +31,10 @@ function SessionsDAO(db) {
         });
     }
 
+    // revisado
     this.endSession = function(session_id, callback) {
         "use strict";
         // Remove session document
-        sessions.logged = false;
         sessions.remove({ '_id' : session_id }, function (err, numRemoved) {
             "use strict";
             callback(err);

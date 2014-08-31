@@ -21,7 +21,9 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     app.set('views', __dirname + '/views');
 
     // Express middleware to populate 'req.cookies' so we can access cookies
-    app.use(express.cookieParser());
+    app.use(express.cookieParser('CaballoTiburon'));
+    // Para poder utilizar sesiones en linea
+    app.use(express.session());
     // Express middleware to populate 'req.body' so we can access POST variables
     app.use(express.bodyParser());
 

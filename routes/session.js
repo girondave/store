@@ -37,6 +37,14 @@ function SessionHandler (db) {
     this.handleLoginRequest = function(req, res, next) {
         "use strict";
 
+        passport.authenticate('stormpath',
+            {   successRedirect: '/dashboard',
+                failureRedirect: '/login',
+                failureFlash: 'El usuario o la contraseña no existe',
+            }
+        )
+
+        /*
         var email = req.body.email;
         var password = req.body.password;
 
@@ -58,7 +66,7 @@ function SessionHandler (db) {
                 }
             }
 
-            sessions.sessionCleaner();
+            //sessions.sessionCleaner();
             sessions.startSession(user['_id'], user['firstname'], user['lastname'], user['role'], function(err, session_id) {
                 "use strict";
 
@@ -75,13 +83,17 @@ function SessionHandler (db) {
                     return res.render('welcome', req.body.email);
                 }
             });
-        });
+        });*/
     }
 
     // revisado
     this.displayLogoutPage = function(req, res, next) {
         "use strict";
 
+        req.logout();
+        res.redirect('/');
+
+        /*
         var session_id = req.cookies.session;
         req.session.destroy();
 
@@ -91,8 +103,7 @@ function SessionHandler (db) {
             // Even if the user wasn't logged in, redirect to home
             res.cookie('session', '');
             return res.redirect('/');
-        });
-
+        });*/
     }
 
     this.displaySignupPage =  function(req, res, next) {
@@ -113,7 +124,7 @@ function SessionHandler (db) {
         });
     }
 
-this.displayDetailsPage =  function(req, res, next) {
+    this.displayDetailsPage =  function(req, res, next) {
         "use strict";
         res.render("signup", {title: "Detalles de usuario"
             , header: "Detalles"
@@ -175,10 +186,50 @@ this.displayDetailsPage =  function(req, res, next) {
         var gender = req.body.gender
         var role = req.body.role
 
+        // Initialize our Stormpath client.
+        var apiKey = new stormpath.ApiKey(
+          process.env['STORMPATH_API_KEY_ID'],
+          process.env['STORMPATH_API_KEY_SECRET']
+        );
+        var spClient = new stormpath.Client({ apiKey: apiKey });
 
         // set these up in case we have an error case
         var errors = {'email': email}
         if (validateSignup(email, password, verify, firstname, lastname, gender, role, errors)) {
+
+        // Grab our app, then attempt to create this user's account.
+        var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
+            if (err) throw err;
+
+            app.createAccount({
+              email: email,
+              password: password,
+              firstname: firstname,
+              lastname: lastname,
+              gender: gender,
+              role: role
+            }, function (err, createdAccount) {
+                if (err) {
+                    return res.render('signup', {title: 'Registro de usuarios'
+                    , header: "Formulario de Registro"
+                    , email: ""
+                    , password: ""
+                    , password_error: ""
+                    , email_error: "El correo ya está en uso"
+                    , verify_error: ""
+                    , typeForDetails: "text"            
+                    , disableForDetails: null
+                    , buttonFunction: "Enviar"
+                    , error: err.userMessage});
+                } else {
+                    passport.authenticate('stormpath')(req, res, function () {
+                    return res.redirect('/welcome');
+                    });
+                }
+              });
+        });
+
+            /*
             users.addUser(email, password, firstname, lastname, gender, role, function(err, user) {
                 "use strict";
 
@@ -216,7 +267,7 @@ this.displayDetailsPage =  function(req, res, next) {
         else {
             console.log("user did not validate");
             return res.render("signup", errors);
-        }
+        }*/
     }
 
     // revisado
@@ -232,7 +283,6 @@ this.displayDetailsPage =  function(req, res, next) {
             console.log("No se ha identificado. Por favor, inicie sesión.");
             return res.redirect("/login");
         }
-
     }
 
     this.emailExists = function(req, res, next) {

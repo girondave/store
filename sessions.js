@@ -40,11 +40,14 @@ function SessionsDAO(db) {
             callback(err);
         });
     }
+
+    // revisada
     this.getUsername = function(session_id, callback) {
         "use strict";
 
         if (!session_id) {
-            callback(Error("Session not set"), null);
+            console.log("No existe sesion");
+            callback(Error("No ha iniciado sesión"), null);
             return;
         }
 
@@ -54,11 +57,11 @@ function SessionsDAO(db) {
             if (err) return callback(err, null);
 
             if (!session) {
-                callback(new Error("Session: " + session + " does not exist"), null);
+                callback(new Error("La sesión: " + session + " no existe"), null);
                 return;
             }
 
-            callback(null, session.username);
+            callback(null, session);
         });
     }
 

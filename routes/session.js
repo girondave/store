@@ -8,13 +8,17 @@ function SessionHandler (db) {
     var users = new UsersDAO(db);
     var sessions = new SessionsDAO(db);
 
+    //revisada
     this.isLoggedInMiddleware = function(req, res, next) {
+        console.log("Ejecutando isLoggedInMiddleware");
         var session_id = req.cookies.session;
-        sessions.getUsername(session_id, function(err, email) {
+        sessions.getUsername(session_id, function(err, session) {
             "use strict";
 
-            if (!err && email) {
-                req.email = email;
+            console.log("isLoggedInMiddleware. Respuesta de getUsername. \nError: " + err + ". Objeto: " + JSON.stringify(session));
+
+            if (!err && session.email) {
+                req.email = session.email;
             }
             return next();
         });

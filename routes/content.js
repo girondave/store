@@ -32,11 +32,17 @@ function ContentHandler (db) {
         });
     }
 
-
+    // revisado
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
-        if(!req.session.logged){
+        var cookiesSession = req.cookies.session;
+        var varSession = req.session;
+
+        console.log("Corriendo displayMainPage: cookiesSession" + JSON.stringify(cookiesSession));
+        console.log("Corriendo displayMainPage: session" + JSON.stringify(varSession));
+        
+        if(!cookiesSession){
                 return res.render('home', {
                     title: 'Inicio',
                     username: req.email

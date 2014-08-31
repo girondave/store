@@ -22,7 +22,12 @@ function SessionHandler (db) {
 
     this.displayLoginPage = function(req, res, next) {
         "use strict";
-        return res.render("login", {email:"", password:"", login_error:""})
+
+        if(!req.session.logged){
+            return res.render("login", {email:"", password:"", login_error:""});
+        }
+
+        res.redirect("/welcome");
     }
 
     this.handleLoginRequest = function(req, res, next) {
@@ -49,7 +54,7 @@ function SessionHandler (db) {
                 }
             }
 
-            sessions.startSession(user['_id'], user['role']function(err, session_id) {
+            sessions.startSession(user['_id'], user['role'], function(err, session_id) {
                 "use strict";
 
                 if (err) return next(err);

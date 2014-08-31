@@ -58,7 +58,7 @@ function SessionHandler (db) {
                 }
             }
 
-            sessions.startSession(user['_id'], user['role'], function(err, session_id) {
+            sessions.startSession(user['_id'], user['firstname'], user['lastname'], user['role'], function(err, session_id) {
                 "use strict";
 
                 if (err) return next(err);

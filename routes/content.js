@@ -42,14 +42,11 @@ function ContentHandler (db) {
         console.log("Corriendo displayMainPage: cookiesSession" + JSON.stringify(cookiesSession));
         console.log("Corriendo displayMainPage: session" + JSON.stringify(varSession));
         
-        if(!cookiesSession){
-                return res.render('home', {
-                    title: 'Inicio',
-                    username: req.email
-            });
+        if(!varSession.logged){
+                return res.render('home', {title: 'Inicio'});
+        }else{
+            return res.redirect("/welcome");
         }
-
-        return res.redirect("/welcome");
     }
 
     this.displayMainPageByTag = function(req, res, next) {

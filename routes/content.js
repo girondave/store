@@ -188,7 +188,7 @@ function ContentHandler (db) {
         if (!title || !post) {
             var errors = "Post must contain a title and blog entry";
             return res.render("newpost_template", {subject:title, username:req.username, body:post, tags:tags, errors:errors});
-        }
+        0}
 
         var tags_array = extract_tags(tags)
 

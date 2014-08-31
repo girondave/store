@@ -13,6 +13,24 @@ function SessionsDAO(db) {
 
     var sessions = db.collection("sessions");
 
+    // Limpiar la coleccion sessions si hay mas de X registros
+    this.sessionCleaner = function() {
+
+        sessions.find().count(function(err, count){
+            if (err) console.log("Hubo error de conteo");
+            console.log("Conteo: " + count);
+            if (count > 500){
+                sessions.remove(function (err, mess){
+                    if (err){
+                        console.log("Error al remover coleccion");
+                    }else{
+                        console.log("Se borro la coleccion");
+                    }
+                });
+            }
+        });
+    }
+
     this.startSession = function(username, firstname, lastname, role, callback) {
         "use strict";
 
@@ -22,7 +40,7 @@ function SessionsDAO(db) {
         var session_id = crypto.createHash('sha1').update(current_date + random).digest('hex');
 
         // Create session document
-        var session = {'username': username, '_id': session_id, 'firstname': firstname, 'lastname': lastname, 'logged':true, 'role':role}
+        var session = {'username': username, '_id': session_id, 'firstname': firstname, 'lastname': lastname, 'logged':true, 'role':role};
 
         // Insert session document
         sessions.insert(session, function (err, result) {

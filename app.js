@@ -23,7 +23,7 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     // Express middleware to populate 'req.cookies' so we can access cookies
     app.use(express.cookieParser('CaballoTiburon'));
     // Para poder utilizar sesiones en linea, expira en 15 minutos
-    var cookieOptions = {cookie:{ maxAge: 15 * 60 * 1000 }};
+    var cookieOptions = {cookie:{ maxAge: 0.2 * 60 * 1000 }};
     app.use(express.session(cookieOptions));
     // Express middleware to populate 'req.body' so we can access POST variables
     app.use(express.bodyParser());

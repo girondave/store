@@ -28,7 +28,7 @@ function SessionHandler (db) {
         "use strict";
 
         if(!req.session.logged){
-            return res.render("login", {email:"", password:"", login_error:""});
+            return res.render("login", {email:"", password:"", login_error:req.flash('error')[0]});
         }
 
         res.redirect("/welcome");
@@ -204,8 +204,8 @@ function SessionHandler (db) {
             app.createAccount({
               email: email,
               password: password,
-              firstname: firstname,
-              lastname: lastname,
+              givenName: firstname,
+              surname: lastname,
               gender: gender,
               role: role
             }, function (err, createdAccount) {
@@ -215,7 +215,7 @@ function SessionHandler (db) {
                     , email: ""
                     , password: ""
                     , password_error: ""
-                    , email_error: "El correo ya está en uso"
+                    , email_error: err.userMessage + "El correo ya está en uso"
                     , verify_error: ""
                     , typeForDetails: "text"            
                     , disableForDetails: null
@@ -274,6 +274,16 @@ function SessionHandler (db) {
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
 
+        if (!req.user || req.user.status !== 'ENABLED') {
+            console.log("No se ha identificado. Por favor, inicie sesión.");
+            return res.redirect('/login');
+        }else{
+            res.render('welcome', {
+                username: req.user
+            })
+        }
+
+        /*
         var varSession = req.session;
         var username = varSession.firstname + " " + varSession.lastname;
 
@@ -282,7 +292,7 @@ function SessionHandler (db) {
         }else{
             console.log("No se ha identificado. Por favor, inicie sesión.");
             return res.redirect("/login");
-        }
+        }*/
     }
 
     this.emailExists = function(req, res, next) {

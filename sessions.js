@@ -89,41 +89,38 @@ function SessionsDAO(db) {
         var recoverypass=''
 
         this.generatepass=function(){
-        recoverypass=''
-        for (i=0;i<8;i++)
-        recoverypass+=keylist.charAt(Math.floor(Math.random()*keylist.length))
-        return recoverypass
-    }
+            recoverypass=''
+            for (i=0;i<8;i++)
+            recoverypass+=keylist.charAt(Math.floor(Math.random()*keylist.length))
+            return recoverypass
+        }   
 
         var smtpTransport = nodemailer.createTransport("SMTP",{
-      service: "hotmail",
-      auth: {
-      user: "webappfpi@hotmail.com",
-      pass: "Appadmin"
-    }
-  });
+        service: "hotmail",
+        auth: {
+            user: "webappfpi@hotmail.com",
+            pass: "Appadmin"
+              }
+        });
 
 
-  var mailOptions = {
-    from: "webappfpi<webappfpi@hotmail.com>", // sender address
-    to: email, // list of receivers
-    subject: "Recuperación de contraseña", // Subject line
-    html: recoverypass // html body
-  }
+        var mailOptions = {
+            from: "webappfpi<webappfpi@hotmail.com>", // sender address
+            to: email, // list of receivers
+            subject: "Recuperación de contraseña", // Subject line
+            html: recoverypass // html body
+        }
 
                     
-  smtpTransport.sendMail(mailOptions, function(error, response){
-    if(error){
-      res.send("ocurrio un error, intentalo mas tarde");
-    }else{
-      res.send("email enviado con exito")
-    }
+        smtpTransport.sendMail(mailOptions, function(error, response){
+            if(error){
+                res.send("ocurrio un error, intentalo mas tarde");
+            }else{
+                res.send("email enviado con exito")
+            }
+        });   
 
-  });   
-  
-
-  res.send("El email no se valido Volver")  
-
+        res.send("El email no se valido Volver")  
     }
 }
 

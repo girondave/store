@@ -36,6 +36,13 @@ function ContentHandler (db) {
     this.displayMainPage = function(req, res, next) {
         "use strict";
 
+        if(req.user){
+            res.render('index', {title: 'Inicio'});
+        }else{
+            res.redirect('/welcome');
+        }
+
+        /*
         var varSession = req.session;
         var username = varSession.firstname + " " + varSession.lastname;
 
@@ -45,7 +52,7 @@ function ContentHandler (db) {
             return res.redirect('/welcome');                
         }else{
             return res.render('home', {title: 'Inicio'});
-        }
+        }*/
     }
 
     this.displayMainPageByTag = function(req, res, next) {

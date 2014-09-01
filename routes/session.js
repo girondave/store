@@ -48,6 +48,7 @@ function SessionHandler (db) {
     this.handleLoginRequest = function(req, res, next) {
         "use strict";
 
+        console.log("Ejecutando handleLoginRequest");
         passport.authenticate('stormpath',
             {   successRedirect: '/welcome',
                 failureRedirect: '/login',
@@ -194,14 +195,14 @@ function SessionHandler (db) {
     // revisado
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
-
+        console.log("username: " + req.user + " status: " + req.user.status);
         if (!req.user || req.user.status !== 'ENABLED') {
             console.log("No se ha identificado. Por favor, inicie sesión.");
             return res.redirect('/login');
         }else{
             res.render('welcome', {
                 username: req.user
-            })
+            });
         }
     }
 

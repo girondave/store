@@ -45,17 +45,18 @@ function SessionHandler (db) {
         }
     }
 
-    this.handleLoginRequest = function(req, res, next) {
-        "use strict";
+    /*
+    this.handleLoginRequest = function() {
+        //"use strict";
 
-        console.log("Ejecutando handleLoginRequest");
-        passport.authenticate('stormpath',
-            {   successRedirect: '/welcome',
-                failureRedirect: '/login',
-                failureFlash: 'El usuario o la contraseña no existe',
-            }
-        )
-    }
+        console.log("Ejecutando handleLoginRequest: ");
+        passport.authenticate('stormpath', {
+            successRedirect: '/welcome',
+            failureRedirect: '/login',
+            failureFlash: 'Invalid email or password.',
+        })
+        console.log("Terminando handleLoginRequest: ");
+    }*/
 
     // revisado
     this.displayLogoutPage = function(req, res, next) {

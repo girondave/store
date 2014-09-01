@@ -2,6 +2,8 @@ var SessionHandler = require('./session')
   , ContentHandler = require('./content')
   , ErrorHandler = require('./error').errorHandler;
 
+  var passport = require('passport');
+
 module.exports = exports = function(app, db) {
 
     var sessionHandler = new SessionHandler(db);
@@ -27,7 +29,13 @@ module.exports = exports = function(app, db) {
 
     // Login form
     app.get('/login', sessionHandler.displayLoginPage);
-    app.post('/login', sessionHandler.handleLoginRequest);
+    //app.post('/login', sessionHandler.handleLoginRequest);
+    app.post('/login', passport.authenticate('stormpath', {
+            successRedirect: '/welcome',
+            failureRedirect: '/login',
+            failureFlash: 'Correo o contraseña inválida',
+        })
+    );
 
     // Logout page
     app.get('/logout', sessionHandler.displayLogoutPage);

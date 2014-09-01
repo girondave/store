@@ -52,5 +52,7 @@ module.exports = exports = function(app, db) {
     // Administracion de usuarios
     app.get('/useradmin', contentHandler.displayUsersInfo);
 
+    //Forgot Password
+    app.get('/Forgot', sessionHandler.forgotPassword);
     
 }

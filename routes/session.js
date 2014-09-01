@@ -10,6 +10,15 @@ function SessionHandler (db) {
     var users = new UsersDAO(db);
     var sessions = new SessionsDAO(db);
 
+    // Initialize our Stormpath client.
+        var apiKey = new stormpath.ApiKey(
+          process.env['STORMPATH_API_KEY_ID'],
+          process.env['STORMPATH_API_KEY_SECRET']
+        );
+        var spClient = new stormpath.Client({ apiKey: apiKey });
+
+
+
     //revisada
     this.isLoggedInMiddleware = function(req, res, next) {
         console.log("Ejecutando isLoggedInMiddleware");
@@ -131,12 +140,7 @@ function SessionHandler (db) {
         var gender = req.body.gender
         var role = req.body.role
 
-        // Initialize our Stormpath client.
-        var apiKey = new stormpath.ApiKey(
-          process.env['STORMPATH_API_KEY_ID'],
-          process.env['STORMPATH_API_KEY_SECRET']
-        );
-        var spClient = new stormpath.Client({ apiKey: apiKey });
+        
 
         // set these up in case we have an error case
         var errors = {'email': email}
@@ -200,6 +204,22 @@ function SessionHandler (db) {
             })
         }
     }
+
+    this.forgotPassword = function(req, res, next) {
+        "use strict";
+
+        var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
+        if (err) throw err;
+
+        var emailOrUsername = req.email; 
+        app.sendPasswordResetEmail(emailOrUsername, function onEmailSent(err, token) {
+        console.log(token);
+            });
+        res.redirect('/login');
+
+     });
+
+     }
 
     
 }

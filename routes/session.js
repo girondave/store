@@ -215,13 +215,13 @@ function SessionHandler (db) {
         var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
         //if (err) throw err;
 
-        var emailOrUsername = req.username; 
+        var emailOrUsername = req.body.username; 
         console.log('esto muestra el username: ' + emailOrUsername)
         app.sendPasswordResetEmail(emailOrUsername, function onEmailSent(err, token) {
         console.log(token);
             });
 
-        console.log('esta cosa imprime el email'+ emailOrUsername + 'esta cosa muestra el error:'+ err);
+        console.log('esta cosa imprime el email '+ emailOrUsername + 'esta cosa muestra el error: '+ err);
         //res.redirect('/login');
 
      });

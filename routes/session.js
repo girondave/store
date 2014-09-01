@@ -29,11 +29,11 @@ function SessionHandler (db) {
     this.displayLoginPage = function(req, res, next) {
         "use strict";
 
-        if(!req.session.logged){
+        if(!req.user){
             return res.render("login", {email:"", password:"", login_error:req.flash('error')[0]});
+        }else{
+            res.redirect("/welcome");
         }
-
-        res.redirect("/welcome");
     }
 
     this.handleLoginRequest = function(req, res, next) {

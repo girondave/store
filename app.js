@@ -49,7 +49,7 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     app.set('views', __dirname + '/views');
 
     // Para poder utilizar sesiones en linea, expira en X minutos
-    var cookieOptions = { secure:false, maxAge: 0.2 * 60 * 1000 };
+    var cookieOptions = { secure:false, maxAge: 5 * 60 * 1000 };
 
     //Passport and Stormpath
     app.use(favicon(__dirname + '/public/img/favicon.ico'));

@@ -217,14 +217,15 @@ function SessionHandler (db) {
 
         var emailOrUsername = req.username; 
         console.log('esto muestra el username: ' + emailOrUsername)
-        app.sendPasswordResetEmail(emailOrUsername, function onEmailSent(err, token) {
+        app.sendPasswordResetEmail(emailOrUsername, function (err, token) {
         console.log(token);
             });
 
-        console.log('esta cosa imprime el email'+ emailOrUsername + 'esta cosa muestra el error:'+ err);
+        console.log('email '+ emailOrUsername + " " + req.param.username + ' error: '+ err);
         //res.redirect('/login');
 
      });
+       console.log('email '+ req.username + " " + req.param.username + ' error: '); 
 
      }
 

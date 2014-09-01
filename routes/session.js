@@ -215,7 +215,7 @@ function SessionHandler (db) {
         var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
         //if (err) throw err;
 
-        var emailOrUsername = req.params.username; 
+        var emailOrUsername = req.username; 
         console.log('esto muestra el username: ' + emailOrUsername)
         app.sendPasswordResetEmail(emailOrUsername, function onEmailSent(err, token) {
         console.log(token);

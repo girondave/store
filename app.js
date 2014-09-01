@@ -4,7 +4,7 @@ var express = require('express')
   , path = require('path')
 
   // new Passport/Stormpath session Manager
-  , favicon = require('static-favicon')
+  , favicon = require('serve-favicon')
   , logger = require('morgan')
   , passport = require('passport')
   , StormpathStrategy = require('passport-stormpath')
@@ -49,13 +49,13 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     app.set('views', __dirname + '/views');
 
     // Para poder utilizar sesiones en linea, expira en X minutos
-    var cookieTimer = { maxAge: 0.2 * 60 * 1000 };
+    var cookieOptions = { secure:false, maxAge: 0.2 * 60 * 1000 };
 
     //Passport and Stormpath
-    app.use(favicon());
+    app.use(favicon(__dirname + '/public/img/favicon.ico'));
     app.use(logger('dev'));
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({extended:true}));
     app.use(cookieParser());
     app.use(require('stylus').middleware(path.join(__dirname, 'public')));
     app.use(express.static(path.join(__dirname, 'public')));
@@ -63,8 +63,9 @@ MongoClient.connect('mongodb://admin:admin@kahana.mongohq.com:10043/webapp', fun
     app.use(session({
       secret: process.env.EXPRESS_SECRET,
       key: 'sid',
-      cookie: {secure: false},
-      cookie: cookieTimer
+      saveUninitialized: true,
+      resave: true,
+      cookie: cookieOptions
     }));
     app.use(passport.initialize());
     app.use(passport.session());

@@ -1,5 +1,7 @@
 var UsersDAO = require('../users').UsersDAO
   , SessionsDAO = require('../sessions').SessionsDAO;
+var passport = require('passport');
+var stormpath = require('stormpath');
 
 /* The SessionHandler must be constructed with a connected db */
 function SessionHandler (db) {
@@ -38,7 +40,7 @@ function SessionHandler (db) {
         "use strict";
 
         passport.authenticate('stormpath',
-            {   successRedirect: '/dashboard',
+            {   successRedirect: '/welcome',
                 failureRedirect: '/login',
                 failureFlash: 'El usuario o la contraseña no existe',
             }
@@ -108,18 +110,16 @@ function SessionHandler (db) {
 
     this.displaySignupPage =  function(req, res, next) {
         "use strict";
-        res.render("signup", {title: "Registro de usuarios"
+
+        res.render('signup', {title: 'Registro de usuarios'
             , header: "Formulario de Registro"
             , email: ""
             , password: ""
-            , password_error: ""
-            , email_error: ""
-            , verify_error: ""
             , extraButtons: "none"   
             , passwordForDetails: "password"
             , checkboxForDetails: null
-            , typeForDetails: "text"         
-            //, disableForDetails: "none"
+            , typeForDetails: "text"            
+            //, disableForDetails: null
             , buttonFunction: "Enviar"
         });
     }
@@ -133,7 +133,6 @@ function SessionHandler (db) {
             , lastname: req.lastname
             , gender: req.gender
             , role: req.role
-            , verify_error: ""
             , extraButtons: null   
             , passwordForDetails: "hidden"
             , checkboxForDetails: "none"
@@ -178,7 +177,7 @@ function SessionHandler (db) {
     this.handleSignup = function(req, res, next) {
         "use strict";
 
-        var email = req.body.email
+        var email = req.body.username
         var password = req.body.password
         var firstname = req.body.firstname
         var lastname = req.body.lastname
@@ -197,37 +196,38 @@ function SessionHandler (db) {
         var errors = {'email': email}
         if (validateSignup(email, password, verify, firstname, lastname, gender, role, errors)) {
 
-        // Grab our app, then attempt to create this user's account.
-        var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
-            if (err) throw err;
+            // Grab our app, then attempt to create this user's account.
+            var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
+                if (err) throw err;
 
-            app.createAccount({
-              email: email,
-              password: password,
-              givenName: firstname,
-              surname: lastname,
-              gender: gender,
-              role: role
-            }, function (err, createdAccount) {
-                if (err) {
-                    return res.render('signup', {title: 'Registro de usuarios'
-                    , header: "Formulario de Registro"
-                    , email: ""
-                    , password: ""
-                    , password_error: ""
-                    , email_error: err.userMessage + "El correo ya está en uso"
-                    , verify_error: ""
-                    , typeForDetails: "text"            
-                    , disableForDetails: null
-                    , buttonFunction: "Enviar"
-                    , error: err.userMessage});
-                } else {
-                    passport.authenticate('stormpath')(req, res, function () {
-                    return res.redirect('/welcome');
-                    });
-                }
-              });
-        });
+                app.createAccount({
+                  email: email,
+                  password: password,
+                  givenName: firstname,
+                  surname: lastname,
+                  gender: gender,
+                  role: role
+                }, function (err, createdAccount) {
+                    if (err) {
+                        return res.render('signup', {title: 'Registro de usuarios'
+                            , header: "Formulario de Registro"
+                            , email: ""
+                            , password: ""
+                            , error: err.userMessage
+                            , extraButtons: "none"   
+                            , passwordForDetails: "password"
+                            , checkboxForDetails: null
+                            , typeForDetails: "text"            
+                            //, disableForDetails: null
+                            , buttonFunction: "Enviar"
+                        });
+                    } else {
+                        passport.authenticate('stormpath')(req, res, function () {
+                        return res.redirect('/welcome');
+                        });
+                    }
+                  });
+            });
 
             /*
             users.addUser(email, password, firstname, lastname, gender, role, function(err, user) {
@@ -267,7 +267,7 @@ function SessionHandler (db) {
         else {
             console.log("user did not validate");
             return res.render("signup", errors);
-        }*/
+        */}
     }
 
     // revisado

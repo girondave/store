@@ -84,8 +84,9 @@
 		</div>
 		
 		<!--demo-login-process.php-->
+
 		
-		<form action="/forgot" id="sky-form2" class="sky-form sky-form-modal">
+		<form action="/forgot/{{username}}" method="get" id="sky-form2" class="sky-form sky-form-modal">
 			<header>Recuperar contraseña</header>
 			
 			<fieldset>					
@@ -93,7 +94,7 @@
 					<label class="label">E-mail</label>
 					<label class="input">
 						<i class="icon-append fa fa-envelope-o"></i>
-						<input type="email" name="username" id="email">
+						<input type="email" name="username" id="email" value="username">
 					</label>
 				</section>
 			</fieldset>
@@ -101,6 +102,7 @@
 			<footer>
 				<button type="submit" name="submit" class="button">Enviar</button>
 				<a href="#" class="button button-secondary modal-closer">Cerrar</a>
+
 			</footer>
 				
 			<div class="message">

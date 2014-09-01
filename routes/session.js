@@ -210,14 +210,19 @@ function SessionHandler (db) {
     this.forgotPassword = function(req, res, next) {
         "use strict";
 
-        var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
-        if (err) throw err;
+        console.log("que ondas ahi?");
 
-        var emailOrUsername = req.email; 
+        var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
+        //if (err) throw err;
+
+        var emailOrUsername = req.params.username; 
+        console.log('esto muestra el username: ' + emailOrUsername)
         app.sendPasswordResetEmail(emailOrUsername, function onEmailSent(err, token) {
         console.log(token);
             });
-        res.redirect('/login');
+
+        console.log('esta cosa imprime el email'+ emailOrUsername + 'esta cosa muestra el error:'+ err);
+        //res.redirect('/login');
 
      });
 

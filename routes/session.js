@@ -201,39 +201,7 @@ function SessionHandler (db) {
         }
     }
 
-    /*
-    this.emailExists = function(req, res, next) {
-        "use strict";
-
-        var email = req.email;
-        
-        console.log("user submitted email: " + email);
-
-        //AQUI TENGO QUE LLAMAR A LA FUNCION EN USERS ROOT PARA VALIDAR EL CORREO! (CAMBIAR NOMBRE A FUNCION)
-        users.validatePassReset(email, function(err, user) {
-            "use strict";
-
-            if (err) {
-                if (err.no_such_user) {
-                    return res.render("login", {email:email, login_error:"El usuario no existe"});
-                }
-                
-                else {
-                    // Some other kind of error
-                    return next(err);
-                }
-            }
-            //LLAMAR A LA FUNCION PARA MANDAR EL CORREO EN SESSIONS EN ROOT (CAMBIAR EL NOMBRE A LA FUNCION)
-            sessions.SendEmail(user['email'], function(err, session_id) {
-                "use strict";
-
-                if (err) return next(err);
-
-                res.cookie('session', session_id);
-                return res.redirect('/reset');
-            });
-        });
-    }*/
+    
 }
 
 module.exports = SessionHandler;

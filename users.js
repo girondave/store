@@ -87,32 +87,7 @@ function UsersDAO(db) {
         });
     }
 
-    
-
-    //AQUI LA FUNCION PARA VALIDAR EL CORREO EN PASS RESET
-    this.validatePassReset = function(email, callback) {
-        "use strict";
-
-        // Callback to pass to MongoDB that validates a user document
-        function validateEmail(err, user) {
-            "use strict";
-
-            if (err) return callback(err, null);
-
-            if (user) {
-            
-                var no_such_user_error = new Error("User: " + user + " does not exist");
-                // Set an extra field so we can distinguish this from a db error
-                no_such_user_error.no_such_user = true;
-                callback(no_such_user_error, null);
-            }
-        }
-
-        users.find({"_id":email}, function(err, doc){
-            validateEmail(err,doc);
-        });
         
-    }
 }
 
 module.exports.UsersDAO = UsersDAO;

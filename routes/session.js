@@ -155,11 +155,23 @@ function SessionHandler (db) {
                   role: role
                 }, function (err, createdAccount) {
                     if (err) {
+                        if (err.userMessage == "Account password minimum length not satisfied."){
+                            error = "La contraseña es demasiado corta";
+                        }else if (err.userMessage == "Password requires a lowercase character!"){
+                            error = "La contraseña debe contener al menos una minúscula";
+                        }else if (err.userMessage == "Password requires an uppercase character!"){
+                            error = "La contraseña debe contener al menos una mayúscula";
+                        }else if (err.userMessage == "Password requires a numeric character!"){
+                            error = "La contraseña debe contener un número";
+                        }else {
+                            error = err.userMessage;
+                        }
+
                         return res.render('signup', {title: 'Registro de usuarios'
                             , header: "Formulario de Registro"
                             , email: ""
                             , password: ""
-                            , error: err.userMessage
+                            , error: error
                             , extraButtons: "none"   
                             , passwordForDetails: "password"
                             , checkboxForDetails: null

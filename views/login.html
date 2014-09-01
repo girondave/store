@@ -105,9 +105,14 @@
 
 			</footer>
 				
-			<div class="message">
+			<div class="sky-form sky-form-modal">
 				<i class="icon-ok"></i>
-				<p>Tu petición fue enviada con éxito<br><a href="#" class="modal-closer">Cerrar</a></p>
+				<p>
+					{% if res.err %}
+						Error
+					{% else %}
+						Todo bien
+					{% endif %}<br><a href="#" class="modal-closer">Cerrar</a></p>
 			</div>
 		</form>
 		
@@ -183,6 +188,8 @@
 					{
 						$(form).ajaxSubmit(
 						{
+							//url: '/forgot', type: 'post',
+
 							beforeSend: function()
 							{
 								$('#sky-form button[type="submit"]').attr('disabled', true);
@@ -191,9 +198,6 @@
 							{
 								$("#sky-form2").addClass('submited');
 							}
-
-
-							url: '/forgot', type: 'post'
 						});
 					},				
 					

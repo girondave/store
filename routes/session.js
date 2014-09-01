@@ -210,26 +210,22 @@ function SessionHandler (db) {
     this.forgotPassword = function(req, res, next) {
         "use strict";
 
-        console.log("que ondas ahi?");
-
         var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
-        //if (err) throw err;
+        if (err) throw err;
 
-        var emailOrUsername = req.body.username; 
-        console.log('esto muestra el username: ' + emailOrUsername)
-        app.sendPasswordResetEmail(emailOrUsername, function (err, token) {
-        console.log(token);
+            var emailOrUsername = req.body.username;
+            app.sendPasswordResetEmail(emailOrUsername, function (err, token) {
+                if(err){
+                    if(err.code == 404) res.err = "El correo es incorrecto";
+                }
+                console.log(token);
+                console.log(res.err);
             });
 
-
-        console.log('email '+ emailOrUsername + " " + req.param.username + ' error: '+ err);
-        console.log('esta cosa imprime el email '+ emailOrUsername + 'esta cosa muestra el error: '+ err);
-        //res.redirect('/login');
-
-     });
-       console.log('email '+ req.username + " " + req.param.username + ' error: '); 
-
-     }
+            console.log('email: '+ emailOrUsername);
+            //res.redirect('/login');
+        });
+    }
 
     
 }

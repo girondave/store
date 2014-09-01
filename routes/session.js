@@ -45,47 +45,6 @@ function SessionHandler (db) {
                 failureFlash: 'El usuario o la contraseña no existe',
             }
         )
-
-        /*
-        var email = req.body.email;
-        var password = req.body.password;
-
-        console.log("user submitted email: " + email + " pass: " + password);
-
-        users.validateLogin(email, password, function(err, user) {
-            "use strict";
-
-            if (err) {
-                if (err.no_such_user) {
-                    return res.render("login", {email:email, password:"", login_error:"El usuario no existe"});
-                }
-                else if (err.invalid_password) {
-                    return res.render("login", {email:email, password:"", login_error:"La contraseña es inválida"});
-                }
-                else {
-                    // Some other kind of error
-                    return next(err);
-                }
-            }
-
-            //sessions.sessionCleaner();
-            sessions.startSession(user['_id'], user['firstname'], user['lastname'], user['role'], function(err, session_id) {
-                "use strict";
-
-                if (err) {
-                    return next(err);
-                }else{
-                    res.cookie('session', session_id);
-                    var cookSes = req.session;
-                    cookSes.role = user['role'];
-                    cookSes.logged = true;
-                    cookSes.firstname = user['firstname'];
-                    cookSes.lastname = user['lastname'];
-                    cookSes.username = user['_id'];
-                    return res.render('welcome', req.body.email);
-                }
-            });
-        });*/
     }
 
     // revisado
@@ -95,17 +54,6 @@ function SessionHandler (db) {
         req.logout();
         res.redirect('/');
 
-        /*
-        var session_id = req.cookies.session;
-        req.session.destroy();
-
-        sessions.endSession(session_id, function (err) {
-            "use strict";
-
-            // Even if the user wasn't logged in, redirect to home
-            res.cookie('session', '');
-            return res.redirect('/');
-        });*/
     }
 
     this.displaySignupPage =  function(req, res, next) {
@@ -118,8 +66,7 @@ function SessionHandler (db) {
             , extraButtons: "none"   
             , passwordForDetails: "password"
             , checkboxForDetails: null
-            , typeForDetails: "text"            
-            //, disableForDetails: null
+            , typeForDetails: "text"        
             , buttonFunction: "Enviar"
         });
     }
@@ -142,7 +89,6 @@ function SessionHandler (db) {
     }
 
     function validateSignup(email, password, verify, firstname, lastname, gender, role, errors) {
-        //email, password, verify, errors) {
         "use strict";
         var PASS_RE = /^.{3,20}$/;
         var EMAIL_RE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -217,8 +163,7 @@ function SessionHandler (db) {
                             , extraButtons: "none"   
                             , passwordForDetails: "password"
                             , checkboxForDetails: null
-                            , typeForDetails: "text"            
-                            //, disableForDetails: null
+                            , typeForDetails: "text"     
                             , buttonFunction: "Enviar"
                         });
                     } else {
@@ -228,46 +173,7 @@ function SessionHandler (db) {
                     }
                   });
             });
-
-            /*
-            users.addUser(email, password, firstname, lastname, gender, role, function(err, user) {
-                "use strict";
-
-                if (err) {
-                    // this was a duplicate
-                    if (err.code == '11000') {
-                        return res.render("signup", {title: "Registro de usuarios"
-            , header: "Formulario de Registro"
-            , email: ""
-            , password: ""
-            , password_error: ""
-            , email_error: "El correo ya está en uso"
-            , verify_error: ""
-            , typeForDetails: "text"            
-            , disableForDetails: null
-            , buttonFunction: "Enviar"
-        });
-                    }
-                    // this was a different error
-                    else {
-                        return next(err);
-                    }
-                }
-
-                sessions.startSession(user['_id'], function(err, session_id) {
-                    "use strict";
-
-                    if (err) return next(err);
-
-                    res.cookie('session', session_id);
-                    return res.redirect('/welcome');
-                });
-            });
         }
-        else {
-            console.log("user did not validate");
-            return res.render("signup", errors);
-        */}
     }
 
     // revisado
@@ -282,19 +188,9 @@ function SessionHandler (db) {
                 username: req.user
             })
         }
-
-        /*
-        var varSession = req.session;
-        var username = varSession.firstname + " " + varSession.lastname;
-
-        if(varSession.logged){
-            return res.render("welcome", {'username':username});                
-        }else{
-            console.log("No se ha identificado. Por favor, inicie sesión.");
-            return res.redirect("/login");
-        }*/
     }
 
+    /*
     this.emailExists = function(req, res, next) {
         "use strict";
 
@@ -326,7 +222,7 @@ function SessionHandler (db) {
                 return res.redirect('/reset');
             });
         });
-    }
+    }*/
 }
 
 module.exports = SessionHandler;

@@ -83,6 +83,7 @@ function SessionsDAO(db) {
         });
     }
 
+    /*
     this.SendEmail = function(email, callback) {
         "use strict";
         var keylist="abcdefghijklmnopqrstuvwxyz123456789"
@@ -121,7 +122,7 @@ function SessionsDAO(db) {
         });   
 
         res.send("El email no se valido Volver")  
-    }
+    }*/
 }
 
 

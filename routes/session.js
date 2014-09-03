@@ -201,11 +201,16 @@ function SessionHandler (db) {
     // revisado
     this.displayWelcomePage = function(req, res, next) {
         "use strict";
-        console.log("username: " + req.user + " status: " + req.user.status);
-        if (!req.user || req.user.status !== 'ENABLED') {
-            console.log("No se ha identificado. Por favor, inicie sesión.");
-            return res.redirect('/login');
+
+        if(req!=null){
+            if (req.user.status !== 'ENABLED') {
+                console.log("La cuenta esta inactiva.");
+            }else if(!req.user){
+                console.log("No se ha identificado. Por favor, inicie sesión.");
+                return res.redirect('/login');
+            }
         }else{
+            console.log("existe req");
             res.render('welcome', {
                 username: req.user
             });

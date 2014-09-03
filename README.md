@@ -7,4 +7,4 @@ LogIn para WebApp
 ./users.js - Users Data Access Helper
 ./views/ - html templates
 
-//este es un comentario troloilolololo ardillas 
+//este es un comentario, dudas o sugerencias.... just eat a horse 

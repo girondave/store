@@ -45,19 +45,6 @@ function SessionHandler (db) {
         }
     }
 
-    /*
-    this.handleLoginRequest = function() {
-        //"use strict";
-
-        console.log("Ejecutando handleLoginRequest: ");
-        passport.authenticate('stormpath', {
-            successRedirect: '/welcome',
-            failureRedirect: '/login',
-            failureFlash: 'Invalid email or password.',
-        })
-        console.log("Terminando handleLoginRequest: ");
-    }*/
-
     // revisado
     this.displayLogoutPage = function(req, res, next) {
         "use strict";
@@ -152,14 +139,19 @@ function SessionHandler (db) {
             var app = spClient.getApplication(process.env['STORMPATH_APP_HREF'], function(err, app) {
                 if (err) throw err;
 
-                app.createAccount({
-                  email: email,
-                  password: password,
-                  givenName: firstname,
-                  surname: lastname,
-                  gender: gender,
-                  role: role
-                }, function (err, createdAccount) {
+                var account = {
+                    givenName: firstname,
+                    surname: lastname,
+                    //username: 'tk421',
+                    email: email,
+                    password: password,
+                    customData: {
+                        gender: gender
+                        //,birthdate: birthdate
+                    },
+                };
+
+                app.createAccount(account, function (err, createdAccount) {
                     if (err) {
                         var error;
                         if (err.userMessage == "Account password minimum length not satisfied."){
@@ -184,9 +176,22 @@ function SessionHandler (db) {
                             , buttonFunction: "Enviar"
                         });
                     } else {
-                        passport.authenticate('stormpath')(req, res, function () {
-                        return res.redirect('/welcome');
-                        });
+                        var groupHref;
+                        if(role==='Administrador'){
+                            groupHref = 'https://api.stormpath.com/v1/groups/JY0cTX0Dgp7lICb4fQhe2';
+                        }else if(role === 'Vendedor'){
+                            groupHref = 'https://api.stormpath.com/v1/groups/7Dk0a4jo9bu3R6C9gSKTPy'; 
+                        }
+                        //via the account
+                        //groupOrGroupHref may be the actual group or the group's href:
+                        if(groupHref){
+                            createdAccount.addToGroup(groupHref, function(err, membership) {
+                              console.log(membership);
+                            });
+                        }
+                        
+                        res.redirect('/login');
+                        
                     }
                   });
             });
